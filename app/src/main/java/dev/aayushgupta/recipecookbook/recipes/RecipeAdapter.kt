@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import dev.aayushgupta.recipecookbook.data.Recipe
+import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.databinding.ListItemRecipeBinding
 
 class RecipeAdapter: ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
