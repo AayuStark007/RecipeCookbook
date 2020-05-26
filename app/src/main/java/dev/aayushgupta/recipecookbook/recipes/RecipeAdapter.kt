@@ -32,7 +32,8 @@ class RecipeAdapter: ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeD
         }
 
         fun bind(item: Recipe) {
-
+            binding.recipe = item
+            binding.executePendingBindings()
         }
     }
 }

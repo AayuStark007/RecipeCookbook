@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        
+        <variable
+            name="recipe"
+            type="dev.aayushgupta.recipecookbook.data.domain.Recipe" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -38,10 +40,11 @@
                 android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textSize="18sp"
+                app:recipeTitleText="@{recipe}"
                 app:layout_constraintBottom_toTopOf="@+id/recipe_cuisine"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_image"
-                android:text="Paneer Pulao" />
+                tools:text="Paneer Pulao"/>
 
             <TextView
                 android:id="@+id/recipe_cuisine"
@@ -50,10 +53,11 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
                 android:textAlignment="textStart"
+                app:recipeCuisineText="@{recipe}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_title"
-                android:text="Indian" />
+                tools:text="Indian" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
