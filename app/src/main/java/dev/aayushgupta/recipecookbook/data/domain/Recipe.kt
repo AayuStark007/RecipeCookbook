@@ -2,6 +2,8 @@ package dev.aayushgupta.recipecookbook.data.domain
 
 import android.net.Uri
 import com.squareup.moshi.JsonClass
+import dev.aayushgupta.recipecookbook.data.database.DbRecipe
+import dev.aayushgupta.recipecookbook.utils.DataAdapters
 import java.util.*
 
 /*
@@ -73,4 +75,45 @@ enum class RecipeType {
     STARTER,
     MAIN,
     DESSERT
+}
+
+fun List<Recipe>.asDatabaseModel(): List<DbRecipe> {
+    return map {
+        it.asDatabaseModel()
+    }
+}
+
+fun Recipe.asDatabaseModel(): DbRecipe {
+    return DbRecipe(
+        id = this.id,
+        title = this.title,
+        description = this.description,
+        type = this.type.ordinal,
+        cuisine = this.cuisine,
+        flavor = this.flavor.ordinal,
+        cookingTime = tryConvertCookingTime(this.cookingTime),
+        ingredients = tryConvertIngredients(this.ingredients),
+        steps = tryConvertSteps(this.steps),
+        images = tryConvertImages(this.images)
+    )
+}
+
+fun tryConvertCookingTime(cookingTime: RecipeTime): String {
+    return DataAdapters.timeAdapter.toJson(cookingTime)
+}
+
+fun tryConvertIngredients(ingredients: List<Ingredient>): String {
+    return ingredients.joinToString(separator = "|") {
+        DataAdapters.ingredientAdapter.toJson(it)
+    }
+}
+
+fun tryConvertSteps(steps: List<String>): String {
+    return steps.joinToString(separator = "|")
+}
+
+fun tryConvertImages(images: List<RecipeImage>): String {
+    return images.joinToString(separator = "|") {
+        DataAdapters.imageAdapter.toJson(it)
+    }
 }
