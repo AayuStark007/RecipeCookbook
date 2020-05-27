@@ -89,7 +89,7 @@ fun tryConvertImages(imgStr: String): List<RecipeImage> {
         } else {
             imgStrList
                 .map { DataAdapters.imageAdapter.fromJsonSafe(it) }
-                .filter { it.uri != Uri.EMPTY.toString() }
+                .filter { it.uri.isNotBlank() }
         }
     } else {
         listOf()

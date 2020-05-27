@@ -40,7 +40,7 @@ data class RecipeTime(
 
 @JsonClass(generateAdapter = true)
 data class RecipeImage(
-    var uri: String = Uri.EMPTY.toString(),
+    var uri: String = "",
     var isFeature: Boolean = false,
     var isLocal: Boolean = true
 )

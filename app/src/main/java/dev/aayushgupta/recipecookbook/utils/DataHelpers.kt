@@ -1,9 +1,6 @@
 package dev.aayushgupta.recipecookbook.utils
 
-import dev.aayushgupta.recipecookbook.data.domain.Recipe
-import dev.aayushgupta.recipecookbook.data.domain.RecipeImage
-import dev.aayushgupta.recipecookbook.data.domain.RecipeTime
-import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
+import dev.aayushgupta.recipecookbook.data.domain.*
 import java.util.*
 
 fun provideSampleRecipes(width: Int = 200, height: Int = 200): List<Recipe> {
@@ -109,12 +106,28 @@ fun provideSampleRecipes(width: Int = 200, height: Int = 200): List<Recipe> {
 
         Recipe(
             title = "Noodles", cuisine = "Chinese",
+            description = "Noodles", type = RecipeType.MAIN,
             cookingTime = RecipeTime(value = 45F, unit = TimeUnit.MINUTES),
+            flavor = FlavorType.SAVORY,
+            ingredients = listOf(
+                Ingredient("pepper", 1F, MeasureUnit.TABLE_SPOON),
+                Ingredient("chili", 1F, MeasureUnit.PINCH),
+                Ingredient("noodles", 1F, MeasureUnit.CUP)
+            ),
+            steps = listOf(
+                "Boil noodles",
+                "add chili",
+                "add peppers",
+                "serve hot"
+            ),
             images = listOf(
                 RecipeImage(
                     uri = "https://picsum.photos/seed/${UUID.randomUUID()}/$width/$height",
                     isLocal = false
-                )
+                ),
+                RecipeImage("url1", isFeature = false, isLocal = false),
+                RecipeImage("url2", isFeature = false, isLocal = false),
+                RecipeImage("url3", isFeature = false, isLocal = false)
             )
         ),
 
