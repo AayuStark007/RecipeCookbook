@@ -35,12 +35,12 @@ class RecipeTest {
     }
 
     /*
+    TODO
         NOTE:
         Currently this test will fail as we have introduced a special char into the list of steps.
         This special char is the same as the separator used during domain conversion.
         Hence, it leads to duplicate entries when the model is converted back:
         "pour water | keep it" becomes "pour water ", " keep it"
-
         Solutions for this are 3 fold:
             - Firstly, We can ensure that no special chars are permitted while entering steps.
                 - Issue with this is, now you cant use &, ' or " which users might want to use.
