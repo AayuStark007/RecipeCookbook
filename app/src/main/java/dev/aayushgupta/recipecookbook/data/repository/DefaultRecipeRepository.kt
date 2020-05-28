@@ -4,29 +4,29 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.room.Room
 import dev.aayushgupta.recipecookbook.data.IRecipeDataSource
-import dev.aayushgupta.recipecookbook.data.IRecipesRepository
+import dev.aayushgupta.recipecookbook.data.IRecipeRepository
 import dev.aayushgupta.recipecookbook.data.Result
 import dev.aayushgupta.recipecookbook.data.database.RecipeDataSource
 import dev.aayushgupta.recipecookbook.data.database.RecipeDatabase
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import kotlinx.coroutines.*
 
-class DefaultRecipesRepository constructor(
+class DefaultRecipeRepository constructor(
     private val recipesLocalDataSource: IRecipeDataSource,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) : IRecipesRepository {
+) : IRecipeRepository {
 
     companion object {
         @Volatile
-        private var INSTANCE: DefaultRecipesRepository? = null
+        private var INSTANCE: DefaultRecipeRepository? = null
 
-        fun getRepository(app: Application): DefaultRecipesRepository {
+        fun getRepository(app: Application): DefaultRecipeRepository {
             return INSTANCE ?: synchronized(this) {
                 val database = Room.databaseBuilder(
                     app,
                     RecipeDatabase::class.java, "Recipes01.db"
                 ).build()
-                DefaultRecipesRepository(RecipeDataSource(database.recipeDao())).also {
+                DefaultRecipeRepository(RecipeDataSource(database.recipeDao())).also {
                     INSTANCE = it
                 }
             }

@@ -3,7 +3,7 @@ package dev.aayushgupta.recipecookbook.data
 import androidx.lifecycle.LiveData
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 
-interface IRecipesRepository {
+interface IRecipeRepository {
     suspend fun getRecipes(forceUpdate: Boolean): Result<List<Recipe>>
 
     suspend fun refreshRecipes()

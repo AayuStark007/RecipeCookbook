@@ -13,7 +13,7 @@ import dev.aayushgupta.recipecookbook.databinding.FragmentRecipesBinding
 import dev.aayushgupta.recipecookbook.utils.ItemSpacingDecoration
 import dev.aayushgupta.recipecookbook.utils.provideSampleRecipes
 
-class RecipesFragment: Fragment() {
+class RecipeFragment: Fragment() {
 
     private lateinit var fragmentRecipesBinding: FragmentRecipesBinding
 
