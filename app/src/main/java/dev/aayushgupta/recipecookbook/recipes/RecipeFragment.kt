@@ -37,6 +37,8 @@ class RecipeFragment: Fragment() {
                 ItemSpacingDecoration(space = 8, span = 2)
             )
         }
+        // TODO: so something about the bizzare icon color
+        setHasOptionsMenu(true)
         return fragmentRecipesBinding.root
     }
 

@@ -27,7 +27,7 @@ class HomeScreenActivity : AppCompatActivity() {
 
         val navController: NavController = findNavController(R.id.nav_host_fragment)
         appBarConfig =
-            AppBarConfiguration.Builder()
+            AppBarConfiguration.Builder(R.id.recipeFragment)
                 .setDrawerLayout(drawerLayout)
                 .build()
 
