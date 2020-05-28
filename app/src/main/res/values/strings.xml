@@ -7,4 +7,5 @@
     <string name="success_save_recipe_message">Recipe Saved</string>
     <string name="success_add_recipe_message">Recipe Added</string>
     <string name="success_delete_recipe_message">Recipe was deleted</string>
+    <string name="no_recipes_image_content_description">No Recipes Image</string>
 </resources>
