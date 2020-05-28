@@ -16,7 +16,7 @@ interface RecipeDao {
     suspend fun getRecipes(): List<DbRecipe>
 
     @Query("SELECT * FROM RECIPES WHERE entryid = :recipeId")
-    suspend fun getRecipeById(recipeId: String): DbRecipe
+    suspend fun getRecipeById(recipeId: String): DbRecipe?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertRecipe(recipe: DbRecipe)
