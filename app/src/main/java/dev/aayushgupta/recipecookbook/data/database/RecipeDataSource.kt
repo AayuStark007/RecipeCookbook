@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.map
 import dev.aayushgupta.recipecookbook.data.IRecipeDataSource
-import dev.aayushgupta.recipecookbook.data.Result
-import dev.aayushgupta.recipecookbook.data.Result.Success
-import dev.aayushgupta.recipecookbook.data.Result.Error
+import dev.aayushgupta.recipecookbook.utils.Result
+import dev.aayushgupta.recipecookbook.utils.Result.Success
+import dev.aayushgupta.recipecookbook.utils.Result.Error
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.data.domain.asDatabaseModel
 import kotlinx.coroutines.CoroutineDispatcher

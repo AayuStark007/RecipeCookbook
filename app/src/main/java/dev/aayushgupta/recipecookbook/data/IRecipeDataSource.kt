@@ -2,6 +2,7 @@ package dev.aayushgupta.recipecookbook.data
 
 import androidx.lifecycle.LiveData
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
+import dev.aayushgupta.recipecookbook.utils.Result
 
 interface IRecipeDataSource {
     fun observeRecipes(): LiveData<Result<List<Recipe>>>

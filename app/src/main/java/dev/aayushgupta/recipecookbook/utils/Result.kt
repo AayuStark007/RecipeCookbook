@@ -1,4 +1,4 @@
-package dev.aayushgupta.recipecookbook.data
+package dev.aayushgupta.recipecookbook.utils
 
 /**
  * A generic class that holds a value with its loading status.

@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import dev.aayushgupta.recipecookbook.data.IRecipeDataSource
 import dev.aayushgupta.recipecookbook.data.IRecipeRepository
-import dev.aayushgupta.recipecookbook.data.Result
+import dev.aayushgupta.recipecookbook.utils.Result
 import dev.aayushgupta.recipecookbook.data.database.RecipeDataSource
 import dev.aayushgupta.recipecookbook.data.database.RecipeDatabase
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
@@ -68,7 +68,7 @@ class DefaultRecipeRepository constructor(
         // TODO: Update data from remote data base
     }
 
-    override suspend fun getRecipe(recipeId: String, forceUpdate: Boolean):Result<Recipe> {
+    override suspend fun getRecipe(recipeId: String, forceUpdate: Boolean): Result<Recipe> {
         if (forceUpdate) {
             updateRecipesFromRemoteDataSource(recipeId)
         }
