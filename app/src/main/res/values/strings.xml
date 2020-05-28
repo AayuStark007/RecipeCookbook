@@ -8,4 +8,8 @@
     <string name="success_add_recipe_message">Recipe Added</string>
     <string name="success_delete_recipe_message">Recipe was deleted</string>
     <string name="no_recipes_image_content_description">No Recipes Image</string>
+    <string name="menu_filter">Filter</string>
+    <string name="refresh">Refresh</string>
+    <string name="label_saved_recipes">Saved Recipes</string>
+    <string name="no_recipes">You have no recipes!</string>
 </resources>

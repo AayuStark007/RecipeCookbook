@@ -1,5 +1,7 @@
 package dev.aayushgupta.recipecookbook.recipes
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.lifecycle.*
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.IRecipeRepository
@@ -28,7 +30,8 @@ class RecipeViewModel(private val recipeRepository: IRecipeRepository): ViewMode
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
-    // TODO: Label based on filtering mode
+    private val _currentFilteringLabel = MutableLiveData<Int>()
+    val currentFilteringLabel: LiveData<Int> = _currentFilteringLabel
 
     private val _noItemsLabel = MutableLiveData<Int>()
     val noItemsLabel: LiveData<Int> = _noItemsLabel
@@ -57,7 +60,25 @@ class RecipeViewModel(private val recipeRepository: IRecipeRepository): ViewMode
     }
 
     init {
+        setScreenState()
         loadRecipes(true)
+    }
+
+    private fun setScreenState() {
+        setState(
+            R.string.label_saved_recipes, R.string.no_recipes,
+            R.drawable.ic_filter_list, true
+        )
+    }
+
+    private fun setState(
+        @StringRes labelString: Int, @StringRes noItemLabelString: Int,
+        @DrawableRes noItemIconDrawable: Int, recipeAddVisible: Boolean
+    ) {
+        _currentFilteringLabel.value = labelString
+        _noItemsLabel.value = noItemLabelString
+        _noItemsIconRes.value = noItemIconDrawable
+        _addRecipeViewVisible.value = recipeAddVisible
     }
 
     fun loadRecipes(forceUpdate: Boolean) {

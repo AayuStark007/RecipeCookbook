@@ -39,7 +39,7 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="16dp"
                     android:layout_gravity="center_vertical"
-                    android:text="Saved Recipes"
+                    android:text="@string/label_saved_recipes"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <androidx.recyclerview.widget.RecyclerView
