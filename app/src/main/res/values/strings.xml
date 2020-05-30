@@ -12,4 +12,12 @@
     <string name="refresh">Refresh</string>
     <string name="label_saved_recipes">Saved Recipes</string>
     <string name="no_recipes">You have no recipes!</string>
+    <string name="addrecipe_hint_title">Title</string>
+    <string name="addrecipe_hint_description">Description</string>
+    <string name="addrecipe_hint_type">Type</string>
+    <string name="addrecipe_hint_cuisine">Cuisine</string>
+    <string name="addrecipe_hint_flavor">Flavor</string>
+    <string name="addrecipe_label_time">Recipe Time</string>
+    <string name="addrecipe_hint_time_value">Value</string>
+    <string name="addrecipe_hint_time_unit">Unit</string>
 </resources>
