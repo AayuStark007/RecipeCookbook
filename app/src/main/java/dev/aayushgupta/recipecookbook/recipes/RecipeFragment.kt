@@ -77,7 +77,8 @@ class RecipeFragment: Fragment() {
     private fun setupFab() {
         activity?.findViewById<FloatingActionButton>(R.id.add_recipe_fab)?.let {
             it.setOnClickListener {
-                navigateToAddNewRecipe()
+                //navigateToAddNewRecipe()
+                navigateToTestFragment()
             }
         }
     }
@@ -97,6 +98,12 @@ class RecipeFragment: Fragment() {
                 null,
                 "New Recipe"
             )
+        findNavController().navigate(action)
+    }
+
+    private fun navigateToTestFragment() {
+        val action = RecipeFragmentDirections
+            .actionRecipeFragmentToTestFragment()
         findNavController().navigate(action)
     }
 

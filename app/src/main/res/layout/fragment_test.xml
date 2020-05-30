@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+        <LinearLayout
+            android:id="@+id/ingredient_list_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+<!--            <include layout="@layout/list_item_test"/>-->
+
+
+        </LinearLayout>
+
+<!--        <TextView-->
+<!--            android:id="@+id/recipe_ingredients_label"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="2dp"-->
+<!--            android:text="@string/addrecipe_label_ingredients"-->
+<!--            android:textAppearance="@style/TextAppearance.AppCompat.Caption"-->
+<!--            android:textStyle="bold"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/addrecipe_ingredient_qty_textinput_layout"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/addrecipe_ingredient_measure_textinput_layout"-->
+<!--            app:layout_constraintDimensionRatio="w,2:1"-->
+<!--            app:layout_constraintEnd_toStartOf="@id/addrecipe_ingredient_name_textinput_layout"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/recipe_ingredients_label">-->
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/addrecipe_ingredient_qty_edit_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="@string/addrecipe_hint_ingredient_qty"-->
+<!--                android:imeOptions="flagNoExtractUi"-->
+<!--                android:maxLines="1"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--                android:textStyle="bold" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:id="@+id/addrecipe_ingredient_measure_textinput_layout"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintDimensionRatio="w,2:1"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/addrecipe_ingredient_qty_textinput_layout"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/addrecipe_ingredient_qty_textinput_layout">-->
+
+<!--            <androidx.appcompat.widget.AppCompatAutoCompleteTextView-->
+<!--                android:id="@+id/addrecipe_ingredient_measure_edit_text"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:ellipsize="end"-->
+<!--                android:hint="@string/addrecipe_hint_ingredient_measure"-->
+<!--                android:inputType="none"-->
+<!--                android:maxLines="1"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--                android:textStyle="bold" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
