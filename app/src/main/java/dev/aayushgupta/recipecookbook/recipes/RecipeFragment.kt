@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -91,7 +92,12 @@ class RecipeFragment: Fragment() {
     }
 
     private fun navigateToAddNewRecipe() {
-        // Do Stuff
+        val action = RecipeFragmentDirections
+            .actionRecipeFragmentToAddRecipeFragment(
+                null,
+                "New Recipe"
+            )
+        findNavController().navigate(action)
     }
 
     private fun openRecipeDetails(recipeId: String) {

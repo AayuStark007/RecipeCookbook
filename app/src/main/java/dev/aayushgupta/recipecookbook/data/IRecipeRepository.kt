@@ -5,7 +5,7 @@ import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.utils.Result
 
 interface IRecipeRepository {
-    suspend fun getRecipes(forceUpdate: Boolean): Result<List<Recipe>>
+    suspend fun getRecipes(forceUpdate: Boolean = false): Result<List<Recipe>>
 
     suspend fun refreshRecipes()
     fun observeRecipes(): LiveData<Result<List<Recipe>>>
@@ -13,7 +13,7 @@ interface IRecipeRepository {
 
     suspend fun refreshRecipe(recipeId: String)
 
-    suspend fun getRecipe(recipeId: String, forceUpdate: Boolean): Result<Recipe>
+    suspend fun getRecipe(recipeId: String, forceUpdate: Boolean = false): Result<Recipe>
 
     suspend fun saveRecipe(recipe: Recipe)
 

@@ -2,6 +2,7 @@ package dev.aayushgupta.recipecookbook.data.domain
 
 import android.net.Uri
 import com.squareup.moshi.JsonClass
+import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.database.DbRecipe
 import dev.aayushgupta.recipecookbook.utils.DataAdapters
 import java.util.*
@@ -45,36 +46,36 @@ data class RecipeImage(
     var isLocal: Boolean = true
 )
 
-enum class TimeUnit {
-    NONE,
-    MINUTES,
-    HOURS
+enum class TimeUnit(val displayId: Int) {
+    NONE(R.string.label_none),
+    MINUTES(R.string.label_time_unit_minutes),
+    HOURS(R.string.label_time_unit_hours)
 }
 
-enum class MeasureUnit {
-    NONE,
-    TABLE_SPOON,
-    TEA_SPOON,
-    CUP,
-    GRAMS,
-    LITRE,
-    PINCH
+enum class MeasureUnit(val displayId: Int) {
+    NONE(R.string.label_none),
+    TABLE_SPOON(R.string.label_measure_table_spoon),
+    TEA_SPOON(R.string.label_nmeasure_tea_spoon),
+    CUP(R.string.label_measure_cups),
+    GRAMS(R.string.label_measure_grams),
+    LITRE(R.string.label_measure_litre),
+    PINCH(R.string.label_measure_pinch)
 }
 
-enum class FlavorType {
-    NONE,
-    SWEET,
-    SAVORY,
-    SOUR,
-    SALTY,
-    FRUITY
+enum class FlavorType(val displayId: Int) {
+    NONE(R.string.label_none),
+    SWEET(R.string.label_flavor_sweet),
+    SAVORY(R.string.label_flavor_savory),
+    SOUR(R.string.label_flavor_sour),
+    SALTY(R.string.label_flavor_salty),
+    FRUITY(R.string.label_flavor_fruity)
 }
 
-enum class RecipeType {
-    NONE,
-    STARTER,
-    MAIN,
-    DESSERT
+enum class RecipeType(val displayId: Int) {
+    NONE(R.string.label_none),
+    STARTER(R.string.label_recipe_starter),
+    MAIN(R.string.label_recipe_main),
+    DESSERT(R.string.label_recipe_dessert)
 }
 
 fun List<Recipe>.asDatabaseModel(): List<DbRecipe> {
