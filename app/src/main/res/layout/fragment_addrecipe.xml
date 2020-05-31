@@ -96,6 +96,7 @@
                         android:cursorVisible="false"
                         android:editable="false"
                         android:hint="@string/addrecipe_hint_type"
+                        android:text="@={viewmodel.type}"
                         android:inputType="none"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -196,6 +197,7 @@
                         android:layout_height="wrap_content"
                         android:editable="false"
                         android:hint="@string/addrecipe_hint_time_unit"
+                        android:text="@={viewmodel.cookingTimeUnit}"
                         android:inputType="none"
                         android:textStyle="bold"/>
                 </com.google.android.material.textfield.TextInputLayout>

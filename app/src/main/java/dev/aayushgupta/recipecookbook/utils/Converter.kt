@@ -6,6 +6,8 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseMethod
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.domain.FlavorType
+import dev.aayushgupta.recipecookbook.data.domain.RecipeType
+import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
 import timber.log.Timber
 
 object Converter {
@@ -108,5 +110,64 @@ fun AppCompatAutoCompleteTextView.getFlavor(): FlavorType {
         context.getString(R.string.label_flavor_fruity) -> FlavorType.FRUITY
         context.getString(R.string.label_none) -> FlavorType.NONE
         else -> FlavorType.NONE
+    }
+}
+
+
+// Update view when livedata changes
+@BindingAdapter("android:text")
+fun AppCompatAutoCompleteTextView.assignType(value: RecipeType?) {
+    Timber.d("assign $value to view: $text")
+    value?.let {
+        if (text.toString() != context.getString(value.displayId)) {
+            when (value) {
+                RecipeType.STARTER -> setText(context.getText(R.string.label_recipe_starter), false)
+                RecipeType.MAIN -> setText(context.getText(R.string.label_recipe_main), false)
+                RecipeType.DESSERT -> setText(context.getText(R.string.label_recipe_dessert), false)
+                RecipeType.NONE -> setText(context.getText(R.string.label_none), false)
+            }
+        }
+
+    }
+}
+
+// Update livedata when view changes
+@InverseBindingAdapter(attribute = "android:text")
+fun AppCompatAutoCompleteTextView.getType(): RecipeType {
+    Timber.d("Set live data $text")
+    return when (text.toString()) {
+        context.getString(R.string.label_recipe_starter) -> RecipeType.STARTER
+        context.getString(R.string.label_recipe_main) -> RecipeType.MAIN
+        context.getString(R.string.label_recipe_dessert) -> RecipeType.DESSERT
+        context.getString(R.string.label_none) -> RecipeType.NONE
+        else -> RecipeType.NONE
+    }
+}
+
+// Update view when livedata changes
+@BindingAdapter("android:text")
+fun AppCompatAutoCompleteTextView.assignUnit(value: TimeUnit?) {
+    Timber.d("assign $value to view: $text")
+    value?.let {
+        if (text.toString() != context.getString(value.displayId)) {
+            when (value) {
+                TimeUnit.HOURS -> setText(context.getText(R.string.label_time_unit_hours), false)
+                TimeUnit.MINUTES -> setText(context.getText(R.string.label_time_unit_minutes), false)
+                TimeUnit.NONE -> setText(context.getText(R.string.label_none), false)
+            }
+        }
+
+    }
+}
+
+// Update livedata when view changes
+@InverseBindingAdapter(attribute = "android:text")
+fun AppCompatAutoCompleteTextView.getUnit(): TimeUnit {
+    Timber.d("Set live data $text")
+    return when (text.toString()) {
+        context.getString(R.string.label_time_unit_hours) -> TimeUnit.HOURS
+        context.getString(R.string.label_time_unit_minutes) -> TimeUnit.MINUTES
+        context.getString(R.string.label_none) -> TimeUnit.NONE
+        else -> TimeUnit.NONE
     }
 }

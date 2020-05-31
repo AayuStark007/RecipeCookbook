@@ -45,4 +45,9 @@
     <string name="label_recipe_starter">Starters</string>
     <string name="label_recipe_main">Main Course</string>
     <string name="label_recipe_dessert">Dessert</string>
+    <string name="empty_title_message">Recipe title cannot be empty</string>
+    <string name="invalid_time_specified">Invalid time specified</string>
+    <string name="invalid_time_value">Time value cannot be null or 0</string>
+    <string name="invalid_ingredients">Empty or blank ingredients list</string>
+    <string name="invalid_steps">Steps cannot be blank</string>
 </resources>

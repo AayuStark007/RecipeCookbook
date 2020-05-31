@@ -1,16 +1,14 @@
 package dev.aayushgupta.recipecookbook.addrecipe
 
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.*
+import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.IRecipeRepository
-import dev.aayushgupta.recipecookbook.data.domain.FlavorType
-import dev.aayushgupta.recipecookbook.data.domain.MeasureUnit
-import dev.aayushgupta.recipecookbook.data.domain.Recipe
-import dev.aayushgupta.recipecookbook.data.domain.RecipeType
+import dev.aayushgupta.recipecookbook.data.domain.*
 import dev.aayushgupta.recipecookbook.utils.Event
 import dev.aayushgupta.recipecookbook.utils.Result
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import java.util.*
 
 class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
 
@@ -36,7 +34,7 @@ class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewM
     val cuisine = MutableLiveData<String>()
     val flavor = MutableLiveData<FlavorType>()
     val cookingTimeValue = MutableLiveData<String>()
-    val cookingTimeUnit = MutableLiveData<MeasureUnit>()
+    val cookingTimeUnit = MutableLiveData<TimeUnit>()
     val ingredients = MutableLiveData<String>()
     val steps = MutableLiveData<String>()
 
@@ -91,6 +89,96 @@ class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewM
         Timber.d("TimeUnit: ${cookingTimeUnit.value}")
         Timber.d("Ingredients: ${ingredients.value}")
         Timber.d("Steps: ${steps.value}")
+        val currentTitle = title.value
+        val currentDescription = description.value ?: ""
+        val recipeType = type.value ?: RecipeType.NONE
+        val currentCuisine = cuisine.value ?: ""
+        val flavorType = flavor.value ?: FlavorType.NONE
+
+        // TODO: better validation
+        val timeVal = cookingTimeValue.value
+        val timeUnit = cookingTimeUnit.value
+
+        val ingredientList = ingredients.value
+        val stepsList = steps.value
+
+
+        if (currentTitle == null) {
+            _snackbarText.value = Event(R.string.empty_title_message)
+            return
+        }
+
+        if (timeVal == null || timeUnit == null || timeUnit == TimeUnit.NONE) {
+            _snackbarText.value = Event(R.string.invalid_time_specified)
+            return
+        }
+
+        val floatTime = timeVal.toFloatOrNull() ?: 0F
+        if (floatTime <= 0) {
+            _snackbarText.value = Event(R.string.invalid_time_value)
+            return
+        }
+
+        if (ingredientList.isNullOrBlank()) {
+            _snackbarText.value = Event(R.string.invalid_ingredients)
+            return
+        }
+        val listIngredient: List<Ingredient> = ingredientList.split("\n").map {
+            Ingredient(name = it)
+        }
+
+        if (listIngredient.isNullOrEmpty()) {
+            _snackbarText.value = Event(R.string.invalid_ingredients)
+            return
+        }
+
+        if (stepsList.isNullOrBlank()) {
+            _snackbarText.value = Event(R.string.invalid_steps)
+            return
+        }
+
+        val listStep: List<String> = stepsList.split("\n")
+        if (listStep.isNullOrEmpty()) {
+            _snackbarText.value = Event(R.string.invalid_steps)
+            return
+        }
+
+        val currentRecipeId = recipeId
+        if (isNewRecipe || currentRecipeId == null) {
+            val newRecipe = Recipe(title = currentTitle, description = currentDescription,
+            type = recipeType, cuisine = currentCuisine, flavor = flavorType,
+            cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
+            steps = listStep, images = listOf(
+                    RecipeImage(
+                        uri = "https://picsum.photos/seed/${UUID.randomUUID()}/200/200",
+                        isLocal = false
+                    )
+                ))
+
+            createRecipe(newRecipe)
+        } else {
+            val updatedRecipe = Recipe(id = currentRecipeId, title = currentTitle, description = currentDescription,
+                type = recipeType, cuisine = currentCuisine, flavor = flavorType,
+                cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
+                steps = listStep)
+            updateRecipe(updatedRecipe)
+        }
+
+    }
+
+    private fun createRecipe(recipe: Recipe) = viewModelScope.launch {
+        recipeRepository.saveRecipe(recipe)
+        _recipeUpdatedEvent.value = Event(Unit)
+    }
+
+    private fun updateRecipe(recipe: Recipe) {
+        if (isNewRecipe) {
+            throw RuntimeException("updateRecipe() was called but recipe is new.")
+        }
+        viewModelScope.launch {
+            recipeRepository.saveRecipe(recipe)
+            _recipeUpdatedEvent.value = Event(Unit)
+        }
     }
 
 
