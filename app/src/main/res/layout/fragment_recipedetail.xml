@@ -175,6 +175,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/ic_edit"
+            android:onClick="@{() -> viewmodel.editRecipe()}"
             app:fabSize="normal"
             app:layout_anchor="@id/recipe_detail_scroll_container"
             app:layout_anchorGravity="bottom|right|end" />
