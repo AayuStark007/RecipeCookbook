@@ -17,14 +17,18 @@
             app:popUpToInclusive="false" />
         <action
             android:id="@+id/action_recipeFragment_to_testFragment"
-            app:destination="@id/testFragment" />
+            app:destination="@id/testFragment"
+            app:popUpTo="@id/recipeFragment"
+            app:popUpToInclusive="false" />
         <argument
             android:name="userMessage"
             app:argType="integer"
             android:defaultValue="0" />
         <action
             android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
-            app:destination="@id/recipeDetailFragment" />
+            app:destination="@id/recipeDetailFragment"
+            app:popUpTo="@id/recipeFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
@@ -40,7 +44,9 @@
             app:argType="string" />
         <action
             android:id="@+id/action_addRecipeFragment_to_recipeFragment"
-            app:destination="@id/recipeFragment" />
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/recipeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/testFragment"
@@ -53,9 +59,15 @@
     <fragment
         android:id="@+id/recipeDetailFragment"
         android:name="dev.aayushgupta.recipecookbook.recipedetails.RecipeDetailFragment"
-        android:label="Recipe Details" >
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipedetail">
         <action
             android:id="@+id/action_recipeDetailFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment" />
+            app:destination="@id/addRecipeFragment"
+            app:popUpTo="@id/recipeDetailFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="recipeId"
+            app:argType="string" />
     </fragment>
 </navigation>
