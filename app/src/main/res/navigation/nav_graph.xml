@@ -22,6 +22,9 @@
             android:name="userMessage"
             app:argType="integer"
             android:defaultValue="0" />
+        <action
+            android:id="@+id/action_recipeFragment_to_recipeDetailFragment"
+            app:destination="@id/recipeDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
@@ -47,4 +50,12 @@
     <argument
         android:name="userMessage"
         android:defaultValue="0" />
+    <fragment
+        android:id="@+id/recipeDetailFragment"
+        android:name="dev.aayushgupta.recipecookbook.recipedetails.RecipeDetailFragment"
+        android:label="Recipe Details" >
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_addRecipeFragment"
+            app:destination="@id/addRecipeFragment" />
+    </fragment>
 </navigation>
