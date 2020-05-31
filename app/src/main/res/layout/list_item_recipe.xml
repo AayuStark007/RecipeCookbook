@@ -7,11 +7,16 @@
         <variable
             name="recipe"
             type="dev.aayushgupta.recipecookbook.data.domain.Recipe" />
+
+        <variable
+            name="viewmodel"
+            type="dev.aayushgupta.recipecookbook.recipes.RecipeViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> viewmodel.openRecipe(recipe.id)}">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

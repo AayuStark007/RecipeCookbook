@@ -108,7 +108,7 @@ class RecipeFragment: Fragment() {
     private fun setupRecipeAdapter() {
         val viewModel = fragmentRecipesBinding.viewmodel
         if (viewModel != null) {
-            recipeAdapter = RecipeAdapter()
+            recipeAdapter = RecipeAdapter(viewModel)
             fragmentRecipesBinding.recipeList.adapter = recipeAdapter
         } else {
             Timber.w("ViewModel not initialized when attempting to set up adapter.")

@@ -8,14 +8,15 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.databinding.ListItemRecipeBinding
 
-class RecipeAdapter: ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
+class RecipeAdapter(private val viewModel: RecipeViewModel):
+    ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
         return RecipeViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: RecipeViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(viewModel, getItem(position))
     }
 
     fun submitRecipeList(list: List<Recipe>?) {
@@ -31,7 +32,8 @@ class RecipeAdapter: ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeD
             }
         }
 
-        fun bind(item: Recipe) {
+        fun bind(viewModel: RecipeViewModel, item: Recipe) {
+            binding.viewmodel = viewModel
             binding.recipe = item
             binding.executePendingBindings()
         }
