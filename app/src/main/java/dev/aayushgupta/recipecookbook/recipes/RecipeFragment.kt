@@ -77,8 +77,8 @@ class RecipeFragment: Fragment() {
     private fun setupFab() {
         activity?.findViewById<FloatingActionButton>(R.id.add_recipe_fab)?.let {
             it.setOnClickListener {
-                //navigateToAddNewRecipe()
-                navigateToTestFragment()
+                navigateToAddNewRecipe()
+                //navigateToTestFragment()
             }
         }
     }

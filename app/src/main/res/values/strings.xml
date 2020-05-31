@@ -23,7 +23,7 @@
     <string name="addrecipe_label_ingredients">Ingredients</string>
     <string name="addrecipe_hint_ingredient_qty">Qty.</string>
     <string name="addrecipe_hint_ingredient_measure">Unit</string>
-    <string name="addrecipe_hint_ingredient_name">Name</string>
+    <string name="addrecipe_hint_ingredient_name">Add ingredient on each line</string>
     <string name="content_description_add_ingredient">Add Ingredient</string>
     <string name="addrecipe_label_steps">Steps</string>
     <string name="addrecipe_hint_steps">Add steps on each line</string>
