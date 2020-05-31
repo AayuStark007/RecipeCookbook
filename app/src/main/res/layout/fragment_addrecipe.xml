@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
         <import type="android.view.View" />
+
+        <import type="dev.aayushgupta.recipecookbook.utils.Converter" />
 
         <variable
             name="viewmodel"
@@ -95,7 +96,7 @@
                         android:cursorVisible="false"
                         android:editable="false"
                         android:hint="@string/addrecipe_hint_type"
-                        android:inputType="none" />
+                        android:inputType="none"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -116,7 +117,8 @@
                         android:cursorVisible="false"
                         android:editable="false"
                         android:hint="@string/addrecipe_hint_flavor"
-                        android:inputType="none" />
+                        android:text="@={viewmodel.flavor}"
+                        android:inputType="none"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
@@ -195,7 +197,7 @@
                         android:editable="false"
                         android:hint="@string/addrecipe_hint_time_unit"
                         android:inputType="none"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView

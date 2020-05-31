@@ -1,5 +1,6 @@
 package dev.aayushgupta.recipecookbook.addrecipe
 
+import androidx.databinding.BaseObservable
 import androidx.lifecycle.*
 import dev.aayushgupta.recipecookbook.data.IRecipeRepository
 import dev.aayushgupta.recipecookbook.data.domain.FlavorType
