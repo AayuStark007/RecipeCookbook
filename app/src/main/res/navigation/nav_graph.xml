@@ -18,6 +18,10 @@
         <action
             android:id="@+id/action_recipeFragment_to_testFragment"
             app:destination="@id/testFragment" />
+        <argument
+            android:name="userMessage"
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
     <fragment
         android:id="@+id/addRecipeFragment"
@@ -31,10 +35,16 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_addRecipeFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
     </fragment>
     <fragment
         android:id="@+id/testFragment"
         android:name="dev.aayushgupta.recipecookbook.addrecipe.TestFragment"
         android:label="TestFragment"
         tools:layout="@layout/fragment_test"/>
+    <argument
+        android:name="userMessage"
+        android:defaultValue="0" />
 </navigation>

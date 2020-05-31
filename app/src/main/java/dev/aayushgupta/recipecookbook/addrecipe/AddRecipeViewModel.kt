@@ -6,16 +6,26 @@ import dev.aayushgupta.recipecookbook.data.domain.FlavorType
 import dev.aayushgupta.recipecookbook.data.domain.MeasureUnit
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.data.domain.RecipeType
+import dev.aayushgupta.recipecookbook.utils.Event
 import dev.aayushgupta.recipecookbook.utils.Result
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
 
+    // When we want to display something on snackbar
+    private val _snackbarText = MutableLiveData<Event<Int>>()
+    val snackbarText: LiveData<Event<Int>> = _snackbarText
+
+    // When fab is clicked, we fire this event
+    private val _recipeUpdatedEvent = MutableLiveData<Event<Unit>>()
+    val recipeUpdatedEvent: LiveData<Event<Unit>> = _recipeUpdatedEvent
+
     private var recipeId: String? = null
-    var isNewRecipe: Boolean = false
+    private var isNewRecipe: Boolean = false
     private var isDataLoaded: Boolean = false
 
     // Two-way databinding on some Recipe data fields
@@ -24,8 +34,10 @@ class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewM
     val type = MutableLiveData<RecipeType>()
     val cuisine = MutableLiveData<String>()
     val flavor = MutableLiveData<FlavorType>()
-    val cookingTimeValue = MutableLiveData<Float>()
+    val cookingTimeValue = MutableLiveData<String>()
     val cookingTimeUnit = MutableLiveData<MeasureUnit>()
+    val ingredients = MutableLiveData<String>()
+    val steps = MutableLiveData<String>()
 
     fun start(recipeId: String?) {
         if (_dataLoading.value == true) {
@@ -69,7 +81,15 @@ class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewM
 
     // Fab is clicked
     fun saveRecipe() {
-
+        Timber.d("Title: ${title.value}")
+        Timber.d("Desc: ${description.value}")
+        Timber.d("Type: ${type.value}")
+        Timber.d("Flavor: ${flavor.value}")
+        Timber.d("Cuisine: ${cuisine.value}")
+        Timber.d("TimeVal: ${cookingTimeValue.value}")
+        Timber.d("TimeUnit: ${cookingTimeUnit.value}")
+        Timber.d("Ingredients: ${ingredients.value}")
+        Timber.d("Steps: ${steps.value}")
     }
 
 

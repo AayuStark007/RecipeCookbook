@@ -7,13 +7,18 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.domain.FlavorType
 import dev.aayushgupta.recipecookbook.data.domain.RecipeType
 import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
 import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentAddrecipeBinding
+import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
+import dev.aayushgupta.recipecookbook.utils.EventObserver
+import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 
 class AddRecipeFragment : Fragment() {
 
@@ -43,13 +48,22 @@ class AddRecipeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setupSnackbar()
         setupAutoFills()
+        setupNavigation()
         viewModel.start(args.recipeId)
-        //setupNavigation()
         // viemodel setup
     }
 
     private fun setupSnackbar() {
-        //view?.setupSnackbar(this)
+        view?.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
+    }
+
+    private fun setupNavigation() {
+        viewModel.recipeUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
+            val action = AddRecipeFragmentDirections
+                .actionAddRecipeFragmentToRecipeFragment(ADD_EDIT_RESULT_OK)
+
+            findNavController().navigate(action)
+        })
     }
 
     private fun setupAutoFills() {
