@@ -24,7 +24,7 @@ class RecipeAddEditFragment : Fragment() {
 
     private lateinit var fragmentAddrecipeBinding: FragmentAddrecipeBinding
 
-    private val args: AddRecipeFragmentArgs by navArgs()
+    private val args: RecipeAddEditFragmentArgs by navArgs()
 
     private val viewModel by viewModels<AddRecipeViewModel> {
         AddRecipeViewModelFactory(DefaultRecipeRepository.getRepository(requireActivity().application))
@@ -59,7 +59,7 @@ class RecipeAddEditFragment : Fragment() {
 
     private fun setupNavigation() {
         viewModel.recipeUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
-            val action = AddRecipeFragmentDirections
+            val action = RecipeAddEditFragmentDirections
                 .actionAddRecipeFragmentToRecipeFragment(ADD_EDIT_RESULT_OK)
 
             findNavController().navigate(action)

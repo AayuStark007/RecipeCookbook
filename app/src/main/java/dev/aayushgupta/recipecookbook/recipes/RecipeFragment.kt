@@ -103,6 +103,9 @@ class RecipeFragment: Fragment() {
 
     private fun openRecipeDetails(recipeId: String) {
         Timber.d("Open recipe: $recipeId")
+        val action = RecipeFragmentDirections
+            .actionRecipeFragmentToRecipeDetailFragment(recipeId)
+        findNavController().navigate(action)
     }
 
     private fun setupRecipeAdapter() {
