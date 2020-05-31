@@ -5,6 +5,7 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +22,8 @@ class RecipeFragment: Fragment() {
     private val viewModel by viewModels<RecipeViewModel> {
         RecipeViewModelFactory(DefaultRecipeRepository.getRepository(requireActivity().application))
     }
+
+    private val args: RecipeFragmentArgs by navArgs()
 
     private lateinit var fragmentRecipesBinding: FragmentRecipesBinding
 
@@ -71,16 +74,6 @@ class RecipeFragment: Fragment() {
         setupSnackbar()
         setupRecipeAdapter()
         setupNavigation()
-        setupFab()
-    }
-
-    private fun setupFab() {
-        activity?.findViewById<FloatingActionButton>(R.id.add_recipe_fab)?.let {
-            it.setOnClickListener {
-                navigateToAddNewRecipe()
-                //navigateToTestFragment()
-            }
-        }
     }
 
     private fun setupNavigation() {
@@ -89,6 +82,7 @@ class RecipeFragment: Fragment() {
         })
         viewModel.newRecipeEvent.observe(viewLifecycleOwner, EventObserver {
             navigateToAddNewRecipe()
+            //navigateToTestFragment()
         })
     }
 
@@ -124,7 +118,7 @@ class RecipeFragment: Fragment() {
     private fun setupSnackbar() {
         view?.setupSnackbar(this, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
         arguments?.let {
-            // viewModel.showEditResultMessage()
+            viewModel.showEditResultMessage(args.userMessage)
         }
     }
 }

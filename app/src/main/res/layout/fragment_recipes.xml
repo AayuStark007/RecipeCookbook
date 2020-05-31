@@ -86,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:src="@drawable/ic_add"
+            android:onClick="@{() -> viewmodel.addNewRecipe()}"
             app:fabSize="normal"
             app:layout_anchor="@id/recipes_container_layout"
             app:layout_anchorGravity="bottom|right|end" />
