@@ -102,7 +102,7 @@ class RecipeFragment: Fragment() {
     }
 
     private fun openRecipeDetails(recipeId: String) {
-        // Do Stuff
+        Timber.d("Open recipe: $recipeId")
     }
 
     private fun setupRecipeAdapter() {

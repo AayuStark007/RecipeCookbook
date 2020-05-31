@@ -50,4 +50,11 @@
     <string name="invalid_time_value">Time value cannot be null or 0</string>
     <string name="invalid_ingredients">Empty or blank ingredients list</string>
     <string name="invalid_steps">Steps cannot be blank</string>
+    <string name="recipe_sample_description">
+        Mouth watering delicacy of extreme confundusness.
+        Introducing the ever appealing cream pasta sauce topped with sumptous bayonetta pickle toppings.
+        Try out this amazing dish and let others known too as this is the one and truly dish said to be made by the gods themselves.
+    </string>
+    <string name="ingredients_required_label">Ingredients Required</string>
+    <string name="steps_label">Steps</string>
 </resources>

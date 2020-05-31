@@ -20,7 +20,7 @@ import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.EventObserver
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 
-class AddRecipeFragment : Fragment() {
+class RecipeAddEditFragment : Fragment() {
 
     private lateinit var fragmentAddrecipeBinding: FragmentAddrecipeBinding
 
