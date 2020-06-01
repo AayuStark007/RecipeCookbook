@@ -75,7 +75,7 @@ class RecipeDetailFragment : Fragment() {
 
         viewModel.editRecipeEvent.observe(viewLifecycleOwner, EventObserver {
             val action = RecipeDetailFragmentDirections
-                .actionRecipeDetailFragmentToAddRecipeFragment(
+                .actionRecipeDetailFragmentToRecipeAddEditFragment(
                     args.recipeId,
                     resources.getString(R.string.edit_recipe)
                 )

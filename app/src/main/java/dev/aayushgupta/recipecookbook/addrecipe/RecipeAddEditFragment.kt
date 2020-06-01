@@ -15,19 +15,19 @@ import dev.aayushgupta.recipecookbook.data.domain.FlavorType
 import dev.aayushgupta.recipecookbook.data.domain.RecipeType
 import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
 import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
-import dev.aayushgupta.recipecookbook.databinding.FragmentAddrecipeBinding
+import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeAddEditBinding
 import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.EventObserver
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 
 class RecipeAddEditFragment : Fragment() {
 
-    private lateinit var fragmentAddrecipeBinding: FragmentAddrecipeBinding
+    private lateinit var fragmentRecipeAddEditBinding: FragmentRecipeAddEditBinding
 
     private val args: RecipeAddEditFragmentArgs by navArgs()
 
-    private val viewModel by viewModels<AddRecipeViewModel> {
-        AddRecipeViewModelFactory(DefaultRecipeRepository.getRepository(requireActivity().application))
+    private val viewModel by viewModels<RecipeAddEditViewModel> {
+        RecipeAddEditViewModelFactory(DefaultRecipeRepository.getRepository(requireActivity().application))
     }
 
     override fun onCreateView(
@@ -35,13 +35,13 @@ class RecipeAddEditFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_addrecipe, container, false)
-        fragmentAddrecipeBinding = FragmentAddrecipeBinding.bind(root).apply {
+        val root = inflater.inflate(R.layout.fragment_recipe_add_edit, container, false)
+        fragmentRecipeAddEditBinding = FragmentRecipeAddEditBinding.bind(root).apply {
             viewmodel = viewModel
         }
 
-        fragmentAddrecipeBinding.lifecycleOwner = this.viewLifecycleOwner
-        return fragmentAddrecipeBinding.root
+        fragmentRecipeAddEditBinding.lifecycleOwner = this.viewLifecycleOwner
+        return fragmentRecipeAddEditBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -60,7 +60,7 @@ class RecipeAddEditFragment : Fragment() {
     private fun setupNavigation() {
         viewModel.recipeUpdatedEvent.observe(viewLifecycleOwner, EventObserver {
             val action = RecipeAddEditFragmentDirections
-                .actionAddRecipeFragmentToRecipeFragment(ADD_EDIT_RESULT_OK)
+                .actionRecipeAddEditFragmentToRecipeFragment(ADD_EDIT_RESULT_OK)
 
             findNavController().navigate(action)
         })
@@ -71,18 +71,18 @@ class RecipeAddEditFragment : Fragment() {
         val flavorItems = FlavorType.values().map { getString(it.displayId) }
         val flavorAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, flavorItems)
-        fragmentAddrecipeBinding.addrecipeFlavorAutocomplete.setAdapter(flavorAdapter)
+        fragmentRecipeAddEditBinding.addrecipeFlavorAutocomplete.setAdapter(flavorAdapter)
 
         // setup type items
         val typeItems = RecipeType.values().map { getString(it.displayId) }
         val typeAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, typeItems)
-        fragmentAddrecipeBinding.addrecipeTypeAutocomplete.setAdapter(typeAdapter)
+        fragmentRecipeAddEditBinding.addrecipeTypeAutocomplete.setAdapter(typeAdapter)
 
         // setup time unit
         val timeItems = TimeUnit.values().map { getString(it.displayId) }
         val timeAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, timeItems)
-        fragmentAddrecipeBinding.addrecipeTimeUnitAutocomplete.setAdapter(timeAdapter)
+        fragmentRecipeAddEditBinding.addrecipeTimeUnitAutocomplete.setAdapter(timeAdapter)
     }
 }

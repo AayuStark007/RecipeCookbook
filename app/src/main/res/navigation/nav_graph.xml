@@ -11,8 +11,8 @@
         android:label="@string/app_name"
         tools:layout="@layout/fragment_recipes">
         <action
-            android:id="@+id/action_recipeFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment"
+            android:id="@+id/action_recipeFragment_to_recipeAddEditFragment"
+            app:destination="@id/recipeAddEditFragment"
             app:popUpTo="@id/recipeFragment"
             app:popUpToInclusive="false" />
         <action
@@ -31,10 +31,10 @@
             app:popUpToInclusive="false" />
     </fragment>
     <fragment
-        android:id="@+id/addRecipeFragment"
+        android:id="@+id/recipeAddEditFragment"
         android:name="dev.aayushgupta.recipecookbook.addrecipe.RecipeAddEditFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_addrecipe">
+        tools:layout="@layout/fragment_recipe_add_edit">
         <argument
             android:name="recipeId"
             app:argType="string"
@@ -43,7 +43,7 @@
             android:name="title"
             app:argType="string" />
         <action
-            android:id="@+id/action_addRecipeFragment_to_recipeFragment"
+            android:id="@+id/action_recipeAddEditFragment_to_recipeFragment"
             app:destination="@id/recipeFragment"
             app:popUpTo="@id/recipeFragment"
             app:popUpToInclusive="true" />
@@ -62,8 +62,8 @@
         android:label="Recipe Details"
         tools:layout="@layout/fragment_recipedetail">
         <action
-            android:id="@+id/action_recipeDetailFragment_to_addRecipeFragment"
-            app:destination="@id/addRecipeFragment"
+            android:id="@+id/action_recipeDetailFragment_to_recipeAddEditFragment"
+            app:destination="@id/recipeAddEditFragment"
             app:popUpTo="@id/recipeDetailFragment"
             app:popUpToInclusive="false" />
         <argument

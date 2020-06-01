@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
 
-class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
+class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -185,9 +185,9 @@ class AddRecipeViewModel(private val recipeRepository: IRecipeRepository): ViewM
 }
 
 @Suppress("UNCHECKED_CAST")
-class AddRecipeViewModelFactory (
+class RecipeAddEditViewModelFactory (
     private val recipeRepository: IRecipeRepository
 ): ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-        (AddRecipeViewModel(recipeRepository) as T)
+        (RecipeAddEditViewModel(recipeRepository) as T)
 }

@@ -9,7 +9,7 @@
 
         <variable
             name="viewmodel"
-            type="dev.aayushgupta.recipecookbook.addrecipe.AddRecipeViewModel" />
+            type="dev.aayushgupta.recipecookbook.addrecipe.RecipeAddEditViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

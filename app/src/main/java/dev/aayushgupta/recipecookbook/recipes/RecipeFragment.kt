@@ -88,7 +88,7 @@ class RecipeFragment: Fragment() {
 
     private fun navigateToAddNewRecipe() {
         val action = RecipeFragmentDirections
-            .actionRecipeFragmentToAddRecipeFragment(
+            .actionRecipeFragmentToRecipeAddEditFragment(
                 null,
                 "New Recipe"
             )
