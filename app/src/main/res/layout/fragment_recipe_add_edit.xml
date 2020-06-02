@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
         <import type="android.view.View" />
@@ -17,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/recipe_scroll_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -39,7 +40,6 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@id/addrecipe_description_textinput_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
@@ -62,7 +62,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/addrecipe_type_textinput_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/addrecipe_title_textinput_layout">
@@ -78,16 +77,38 @@
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <ImageView
+                    android:id="@+id/addrecipe_btn_add_image"
+                    android:layout_width="@dimen/image_preview_dimen"
+                    android:layout_height="@dimen/image_preview_dimen"
+                    android:layout_marginTop="8dp"
+                    android:onClick="@{() -> viewmodel.openAddImageDialog()}"
+                    android:src="@drawable/ic_add_photo_alternate_black_24dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/addrecipe_description_textinput_layout"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/addrecipe_image_rv_container"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="8dp"
+                    android:orientation="horizontal"
+                    tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_image"
+                    app:layout_constraintStart_toEndOf="@id/addrecipe_btn_add_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/addrecipe_btn_add_image"
+                    app:layout_constraintBottom_toBottomOf="@id/addrecipe_btn_add_image"/>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/addrecipe_type_textinput_layout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/addrecipe_cuisine_textinput_layout"
                     app:layout_constraintEnd_toStartOf="@id/addrecipe_flavor_textinput_layout"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/addrecipe_description_textinput_layout">
+                    app:layout_constraintTop_toBottomOf="@+id/addrecipe_btn_add_image">
 
                     <androidx.appcompat.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/addrecipe_type_autocomplete"
@@ -153,7 +174,6 @@
                     android:text="@string/addrecipe_label_time"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/addrecipe_time_value_textinput_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/addrecipe_cuisine_textinput_layout" />
@@ -211,7 +231,6 @@
                     android:text="@string/addrecipe_label_ingredients"
                     android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@id/addrecipe_ingredient_name_textinput_layout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/addrecipe_time_value_textinput_layout" />
@@ -224,7 +243,6 @@
                     app:endIconContentDescription="@string/content_description_add_ingredient"
                     app:endIconDrawable="@drawable/ic_add_circle_outline_black_24dp"
                     app:endIconMode="custom"
-                    app:layout_constraintBottom_toTopOf="@id/recipe_steps_label"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/recipe_ingredients_label">
@@ -276,7 +294,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/save_recipe_fab"

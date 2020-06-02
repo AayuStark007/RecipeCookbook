@@ -188,6 +188,9 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
         }
     }
 
+    fun openAddImageDialog() {
+
+    }
 
 }
 
