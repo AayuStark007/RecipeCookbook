@@ -59,4 +59,5 @@
     <string name="steps_label">Steps</string>
     <string name="edit_recipe">Edit Recipe</string>
     <string name="error_loading_recipe">Error loading recipe details</string>
+    <string name="menu_delete_task">Delete Recipe</string>
 </resources>

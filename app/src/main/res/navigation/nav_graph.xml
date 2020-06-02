@@ -69,5 +69,10 @@
         <argument
             android:name="recipeId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_recipeDetailFragment_to_recipeFragment"
+            app:destination="@id/recipeFragment"
+            app:popUpTo="@id/recipeFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

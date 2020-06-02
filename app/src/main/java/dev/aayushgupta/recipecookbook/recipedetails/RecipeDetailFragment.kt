@@ -1,9 +1,7 @@
 package dev.aayushgupta.recipecookbook.recipedetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -13,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeDetailBinding
+import dev.aayushgupta.recipecookbook.recipes.DELETE_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.EventObserver
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 import timber.log.Timber
@@ -36,14 +35,24 @@ class RecipeDetailFragment : Fragment() {
         fragmentRecipeDetailBinding = FragmentRecipeDetailBinding.bind(view).apply {
             viewmodel = viewModel
         }
-
         fragmentRecipeDetailBinding.lifecycleOwner = this.viewLifecycleOwner
-
         setupViewModel()
-
-
         setHasOptionsMenu(true)
         return fragmentRecipeDetailBinding.root
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_delete -> {
+                viewModel.deleteRecipe()
+                true
+            }
+            else -> false
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.recipe_detail_fragment_menu, menu)
     }
 
     private fun setupViewModel() {
@@ -70,7 +79,9 @@ class RecipeDetailFragment : Fragment() {
 
     private fun setupNavigation() {
         viewModel.deleteRecipeEvent.observe(viewLifecycleOwner, EventObserver {
-            // Goto home
+            val action = RecipeDetailFragmentDirections
+                .actionRecipeDetailFragmentToRecipeFragment(DELETE_RESULT_OK)
+            findNavController().navigate(action)
         })
 
         viewModel.editRecipeEvent.observe(viewLifecycleOwner, EventObserver {
