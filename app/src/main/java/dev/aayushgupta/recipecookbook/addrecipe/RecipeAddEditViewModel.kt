@@ -37,6 +37,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
     val cookingTimeUnit = MutableLiveData<TimeUnit>()
     val ingredients = MutableLiveData<String>()
     val steps = MutableLiveData<String>()
+    var images: List<RecipeImage> = listOf()
 
     fun start(recipeId: String?) {
         if (_dataLoading.value == true) {
@@ -70,6 +71,21 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
 
     private fun onRecipeLoaded(recipe: Recipe) {
         // populate all fields
+        title.value = recipe.title
+        description.value = recipe.description
+        type.value = recipe.type
+        flavor.value = recipe.flavor
+        cuisine.value = recipe.cuisine
+        cookingTimeValue.value = recipe.cookingTime.value.toString()
+        cookingTimeUnit.value = recipe.cookingTime.unit
+
+        val listIngredient = recipe.ingredients.map { it.name }
+        ingredients.value = listIngredient.joinToString("\n")
+
+        steps.value = recipe.steps.joinToString("\n")
+
+        images = recipe.images
+
         _dataLoading.value = false
         isDataLoaded = true
     }
@@ -80,15 +96,6 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
 
     // Fab is clicked
     fun saveRecipe() {
-        Timber.d("Title: ${title.value}")
-        Timber.d("Desc: ${description.value}")
-        Timber.d("Type: ${type.value}")
-        Timber.d("Flavor: ${flavor.value}")
-        Timber.d("Cuisine: ${cuisine.value}")
-        Timber.d("TimeVal: ${cookingTimeValue.value}")
-        Timber.d("TimeUnit: ${cookingTimeUnit.value}")
-        Timber.d("Ingredients: ${ingredients.value}")
-        Timber.d("Steps: ${steps.value}")
         val currentTitle = title.value
         val currentDescription = description.value ?: ""
         val recipeType = type.value ?: RecipeType.NONE
@@ -160,7 +167,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
             val updatedRecipe = Recipe(id = currentRecipeId, title = currentTitle, description = currentDescription,
                 type = recipeType, cuisine = currentCuisine, flavor = flavorType,
                 cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
-                steps = listStep)
+                steps = listStep, images = images)
             updateRecipe(updatedRecipe)
         }
 

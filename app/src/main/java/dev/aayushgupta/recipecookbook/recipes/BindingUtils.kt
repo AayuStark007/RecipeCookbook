@@ -18,6 +18,9 @@ import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
 @BindingAdapter("recipeImage")
 fun ImageView.setRecipeImage(recipe: Recipe?) {
     recipe?.let {
+        if (recipe.images.isEmpty()) {
+            return
+        }
         Glide.with(context)
             .load(recipe.images[0].uri)
             .into(this)
