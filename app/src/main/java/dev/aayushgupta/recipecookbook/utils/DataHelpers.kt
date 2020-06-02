@@ -3,6 +3,13 @@ package dev.aayushgupta.recipecookbook.utils
 import dev.aayushgupta.recipecookbook.data.domain.*
 import java.util.*
 
+fun getRandomRecipeImage(width: Int = 200, height: Int = 200): RecipeImage {
+    return RecipeImage(
+        uri = "https://picsum.photos/seed/${UUID.randomUUID()}/$width/$height",
+        isLocal = false
+    )
+}
+
 fun provideSampleRecipes(width: Int = 200, height: Int = 200): List<Recipe> {
     return listOf(
         Recipe(

@@ -6,6 +6,7 @@ import dev.aayushgupta.recipecookbook.data.IRecipeRepository
 import dev.aayushgupta.recipecookbook.data.domain.*
 import dev.aayushgupta.recipecookbook.utils.Event
 import dev.aayushgupta.recipecookbook.utils.Result
+import dev.aayushgupta.recipecookbook.utils.getRandomRecipeImage
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.util.*
@@ -37,7 +38,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
     val cookingTimeUnit = MutableLiveData<TimeUnit>()
     val ingredients = MutableLiveData<String>()
     val steps = MutableLiveData<String>()
-    var images: List<RecipeImage> = listOf()
+    val images = MutableLiveData<List<RecipeImage>>()
 
     fun start(recipeId: String?) {
         if (_dataLoading.value == true) {
@@ -84,7 +85,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
 
         steps.value = recipe.steps.joinToString("\n")
 
-        images = recipe.images
+        images.value = recipe.images
 
         _dataLoading.value = false
         isDataLoaded = true
@@ -109,6 +110,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
         val ingredientList = ingredients.value
         val stepsList = steps.value
 
+        val currentImages = if (images.value.isNullOrEmpty()) listOf(getRandomRecipeImage()) else images.value
 
         if (currentTitle == null) {
             _snackbarText.value = Event(R.string.empty_title_message)
@@ -156,10 +158,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
             type = recipeType, cuisine = currentCuisine, flavor = flavorType,
             cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
             steps = listStep, images = listOf(
-                    RecipeImage(
-                        uri = "https://picsum.photos/seed/${UUID.randomUUID()}/200/200",
-                        isLocal = false
-                    )
+                    getRandomRecipeImage()
                 ))
 
             createRecipe(newRecipe)
@@ -167,7 +166,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
             val updatedRecipe = Recipe(id = currentRecipeId, title = currentTitle, description = currentDescription,
                 type = recipeType, cuisine = currentCuisine, flavor = flavorType,
                 cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
-                steps = listStep, images = images)
+                steps = listStep, images = currentImages ?: listOf(getRandomRecipeImage()))
             updateRecipe(updatedRecipe)
         }
 
@@ -188,8 +187,19 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
         }
     }
 
-    fun openAddImageDialog() {
+    fun onAddImageClicked() {
+        // open image selection menu
+    }
 
+    fun onPreviewClicked() {
+        // open set feature menu
+    }
+
+    fun onPreviewDelete(image: RecipeImage?) {
+        image?.let {
+            val currentImages = images.value ?: return
+            images.value = currentImages.filter { it.uri != image.uri }
+        }
     }
 
 }

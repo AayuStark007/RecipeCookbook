@@ -1,6 +1,5 @@
 package dev.aayushgupta.recipecookbook.recipes
 
-import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
@@ -10,10 +9,9 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import dev.aayushgupta.recipecookbook.data.domain.Ingredient
-import dev.aayushgupta.recipecookbook.data.domain.Recipe
-import dev.aayushgupta.recipecookbook.data.domain.RecipeType
-import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
+import com.bumptech.glide.request.RequestOptions
+import dev.aayushgupta.recipecookbook.R
+import dev.aayushgupta.recipecookbook.data.domain.*
 
 @BindingAdapter("recipeImage")
 fun ImageView.setRecipeImage(recipe: Recipe?) {
@@ -23,6 +21,17 @@ fun ImageView.setRecipeImage(recipe: Recipe?) {
         }
         Glide.with(context)
             .load(recipe.images[0].uri)
+            .into(this)
+    }
+}
+
+@BindingAdapter("previewImage")
+fun ImageView.setRecipeImagePreview(imageData: RecipeImage?) {
+    imageData?.let {
+        Glide.with(context)
+            .load(imageData.uri)
+            .error(R.drawable.ic_image_not_supported_black_24dp)
+            //.apply(RequestOptions().override(context.resources.getDimension(R.dimen.image_preview_dimen))
             .into(this)
     }
 }

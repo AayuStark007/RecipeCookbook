@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.domain.FlavorType
@@ -19,6 +21,7 @@ import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeAddEditBinding
 import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.EventObserver
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
+import timber.log.Timber
 
 class RecipeAddEditFragment : Fragment() {
 
@@ -30,6 +33,8 @@ class RecipeAddEditFragment : Fragment() {
         RecipeAddEditViewModelFactory(DefaultRecipeRepository.getRepository(requireActivity().application))
     }
 
+    private lateinit var recipeImageAdapter: RecipeImageAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,6 +43,7 @@ class RecipeAddEditFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_recipe_add_edit, container, false)
         fragmentRecipeAddEditBinding = FragmentRecipeAddEditBinding.bind(root).apply {
             viewmodel = viewModel
+            addrecipeImageRvContainer.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         }
 
         fragmentRecipeAddEditBinding.lifecycleOwner = this.viewLifecycleOwner
@@ -49,6 +55,7 @@ class RecipeAddEditFragment : Fragment() {
         setupSnackbar()
         setupAutoFills()
         setupNavigation()
+        setupRecipeImageAdapter()
         viewModel.start(args.recipeId)
         // viemodel setup
     }
@@ -84,5 +91,15 @@ class RecipeAddEditFragment : Fragment() {
         val timeAdapter =
             ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, timeItems)
         fragmentRecipeAddEditBinding.addrecipeTimeUnitAutocomplete.setAdapter(timeAdapter)
+    }
+
+    private fun setupRecipeImageAdapter() {
+        val viewModel = fragmentRecipeAddEditBinding.viewmodel
+        if (viewModel != null) {
+            recipeImageAdapter = RecipeImageAdapter(viewModel)
+            fragmentRecipeAddEditBinding.addrecipeImageRvContainer.adapter = recipeImageAdapter
+        } else {
+            Timber.w("ViewModel not initialized when attempting to set up adapter.")
+        }
     }
 }
