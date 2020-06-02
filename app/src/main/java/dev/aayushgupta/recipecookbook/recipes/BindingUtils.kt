@@ -21,6 +21,8 @@ fun ImageView.setRecipeImage(recipe: Recipe?) {
         }
         Glide.with(context)
             .load(recipe.images[0].uri)
+            .placeholder(R.drawable.ic_image_black_24dp)
+            .error(R.drawable.ic_image_not_supported_black_24dp)
             .into(this)
     }
 }
@@ -30,8 +32,8 @@ fun ImageView.setRecipeImagePreview(imageData: RecipeImage?) {
     imageData?.let {
         Glide.with(context)
             .load(imageData.uri)
+            .placeholder(R.drawable.ic_image_black_24dp)
             .error(R.drawable.ic_image_not_supported_black_24dp)
-            //.apply(RequestOptions().override(context.resources.getDimension(R.dimen.image_preview_dimen))
             .into(this)
     }
 }

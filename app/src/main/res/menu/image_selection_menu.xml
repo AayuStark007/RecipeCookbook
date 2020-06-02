@@ -10,4 +10,8 @@
         android:id="@+id/menu_open_gallery"
         android:title="@string/menu_gallery"
         android:icon="@drawable/ic_image_black_24dp"/>
+    <item
+        android:id="@+id/menu_add_random"
+        android:title="@string/menu_random_image"
+        android:icon="@drawable/ic_shuffle_black_24dp"/>
 </menu>

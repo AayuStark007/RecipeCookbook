@@ -114,7 +114,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
         val ingredientList = ingredients.value
         val stepsList = steps.value
 
-        val currentImages = if (images.value.isNullOrEmpty()) listOf(getRandomRecipeImage()) else images.value
+        val currentImages: List<RecipeImage> = images.value ?: listOf( getRandomRecipeImage())
 
         if (currentTitle == null) {
             _snackbarText.value = Event(R.string.empty_title_message)
@@ -161,16 +161,14 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
             val newRecipe = Recipe(title = currentTitle, description = currentDescription,
             type = recipeType, cuisine = currentCuisine, flavor = flavorType,
             cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
-            steps = listStep, images = listOf(
-                    getRandomRecipeImage()
-                ))
+            steps = listStep, images = currentImages)
 
             createRecipe(newRecipe)
         } else {
             val updatedRecipe = Recipe(id = currentRecipeId, title = currentTitle, description = currentDescription,
                 type = recipeType, cuisine = currentCuisine, flavor = flavorType,
                 cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
-                steps = listStep, images = currentImages ?: listOf(getRandomRecipeImage()))
+                steps = listStep, images = currentImages)
             updateRecipe(updatedRecipe)
         }
 
@@ -205,6 +203,12 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
             val currentImages = images.value ?: return
             images.value = currentImages.filter { it.uri != image.uri }
         }
+    }
+
+    fun appendRandomImage() {
+        val listImages = (images.value?.toMutableList() ?: mutableListOf())
+            .also { it.add(getRandomRecipeImage()) }
+        images.value = listImages
     }
 
 }

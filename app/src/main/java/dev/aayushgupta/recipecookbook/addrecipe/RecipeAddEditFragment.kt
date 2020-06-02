@@ -85,6 +85,11 @@ class RecipeAddEditFragment : Fragment() {
 
                 setOnMenuItemClickListener {
                     Timber.d("Image selection item ${it.itemId}")
+                    when (it.itemId) {
+                        R.id.menu_open_camera -> {}
+                        R.id.menu_open_gallery -> {}
+                        R.id.menu_add_random -> { viewModel.appendRandomImage() }
+                    }
                     true
                 }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) setForceShowIcon(true)

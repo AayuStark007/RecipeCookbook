@@ -62,4 +62,5 @@
     <string name="menu_delete_task">Delete Recipe</string>
     <string name="menu_camera">Take Photo</string>
     <string name="menu_gallery">Pick from Gallery</string>
+    <string name="menu_random_image">Random Image</string>
 </resources>
