@@ -1,0 +1,13 @@
+Add ability to add images from camera, gallery, url.
+Show recipe images on detail and add/edit screen.
+Basic searching system to search by title.
+App theme and styling.
+Image carousel on details screen.
+Beautify ingredient and steps list in details screen.
+Show dialogs to confirm delete, edit and back from add recipe.
+Add favourite recipes category with icon.
+Add create, update timestamps to database and domain schema.
+Sort by create, update, favourite.
+Filtering system.
+Use Chips to show filters.
+Transition animations.
