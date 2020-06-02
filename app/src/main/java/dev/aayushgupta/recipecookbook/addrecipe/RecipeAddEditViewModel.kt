@@ -20,6 +20,10 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
     private val _snackbarText = MutableLiveData<Event<Int>>()
     val snackbarText: LiveData<Event<Int>> = _snackbarText
 
+    // Emit event to show an image selection option
+    private val _addImageEvent = MutableLiveData<Event<Unit>>()
+    val addImageEvent: LiveData<Event<Unit>> = _addImageEvent
+
     // When fab is clicked, we fire this event
     private val _recipeUpdatedEvent = MutableLiveData<Event<Unit>>()
     val recipeUpdatedEvent: LiveData<Event<Unit>> = _recipeUpdatedEvent
@@ -189,6 +193,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
 
     fun onAddImageClicked() {
         // open image selection menu
+        _addImageEvent.value = Event(Unit)
     }
 
     fun onPreviewClicked() {

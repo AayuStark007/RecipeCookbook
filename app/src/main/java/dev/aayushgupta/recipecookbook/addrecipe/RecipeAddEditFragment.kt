@@ -1,10 +1,14 @@
 package dev.aayushgupta.recipecookbook.addrecipe
 
+import android.os.Build
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -56,6 +60,7 @@ class RecipeAddEditFragment : Fragment() {
         setupAutoFills()
         setupNavigation()
         setupRecipeImageAdapter()
+        setupImageSelectionMenu()
         viewModel.start(args.recipeId)
         // viemodel setup
     }
@@ -70,6 +75,21 @@ class RecipeAddEditFragment : Fragment() {
                 .actionRecipeAddEditFragmentToRecipeFragment(ADD_EDIT_RESULT_OK)
 
             findNavController().navigate(action)
+        })
+    }
+
+    private fun setupImageSelectionMenu() {
+        viewModel.addImageEvent.observe(viewLifecycleOwner, EventObserver {
+            PopupMenu(requireContext(), fragmentRecipeAddEditBinding.addrecipeBtnAddImage, Gravity.START).run {
+                menuInflater.inflate(R.menu.image_selection_menu, menu)
+
+                setOnMenuItemClickListener {
+                    Timber.d("Image selection item ${it.itemId}")
+                    true
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) setForceShowIcon(true)
+                show()
+            }
         })
     }
 
