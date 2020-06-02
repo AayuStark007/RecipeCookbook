@@ -60,7 +60,7 @@
         android:id="@+id/recipeDetailFragment"
         android:name="dev.aayushgupta.recipecookbook.recipedetails.RecipeDetailFragment"
         android:label="Recipe Details"
-        tools:layout="@layout/fragment_recipedetail">
+        tools:layout="@layout/fragment_recipe_detail">
         <action
             android:id="@+id/action_recipeDetailFragment_to_recipeAddEditFragment"
             app:destination="@id/recipeAddEditFragment"

@@ -12,14 +12,14 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
-import dev.aayushgupta.recipecookbook.databinding.FragmentRecipedetailBinding
+import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeDetailBinding
 import dev.aayushgupta.recipecookbook.utils.EventObserver
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 import timber.log.Timber
 
 class RecipeDetailFragment : Fragment() {
 
-    private lateinit var fragmentRecipedetailBinding: FragmentRecipedetailBinding
+    private lateinit var fragmentRecipeDetailBinding: FragmentRecipeDetailBinding
 
     private val args: RecipeDetailFragmentArgs by navArgs()
 
@@ -32,25 +32,25 @@ class RecipeDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_recipedetail, container, false)
-        fragmentRecipedetailBinding = FragmentRecipedetailBinding.bind(view).apply {
+        val view = inflater.inflate(R.layout.fragment_recipe_detail, container, false)
+        fragmentRecipeDetailBinding = FragmentRecipeDetailBinding.bind(view).apply {
             viewmodel = viewModel
         }
 
-        fragmentRecipedetailBinding.lifecycleOwner = this.viewLifecycleOwner
+        fragmentRecipeDetailBinding.lifecycleOwner = this.viewLifecycleOwner
 
         setupViewModel()
 
 
         setHasOptionsMenu(true)
-        return fragmentRecipedetailBinding.root
+        return fragmentRecipeDetailBinding.root
     }
 
     private fun setupViewModel() {
         viewModel.start(args.recipeId)
 
         viewModel.recipe.observe(viewLifecycleOwner, Observer {
-            fragmentRecipedetailBinding.recipe = it
+            fragmentRecipeDetailBinding.recipe = it
         })
 
         viewModel.isDataAvailable.observe(viewLifecycleOwner, Observer {

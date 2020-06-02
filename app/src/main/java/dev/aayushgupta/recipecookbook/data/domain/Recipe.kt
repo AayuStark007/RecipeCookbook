@@ -1,6 +1,5 @@
 package dev.aayushgupta.recipecookbook.data.domain
 
-import android.net.Uri
 import com.squareup.moshi.JsonClass
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.database.DbRecipe
