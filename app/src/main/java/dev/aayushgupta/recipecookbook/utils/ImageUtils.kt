@@ -36,10 +36,14 @@ object ImageUtils {
     @Throws(IOException::class)
     fun decodeSampledBitmapFromFile(imageFile: File, reqW: Int, reqH: Int): Bitmap {
         BitmapFactory.Options().also { options ->
+            // First decode with inJustDecodeBounds=true to check dimensions
             options.inJustDecodeBounds = true
+            BitmapFactory.decodeFile(imageFile.absolutePath, options)
+
             options.inSampleSize = calculateInSampleSize(options, reqW, reqH)
             options.inJustDecodeBounds = false
 
+            // Decode again with inSampleSize set
             val scaledBitmap = BitmapFactory.decodeFile(imageFile.absolutePath, options)
             // fix rotation
             val exif = ExifInterface(imageFile.absolutePath)
@@ -57,6 +61,7 @@ object ImageUtils {
     }
 
     private fun calculateInSampleSize(options: BitmapFactory.Options, reqW: Int, reqH: Int): Int {
+        // Raw width and height of image
         val h = options.outHeight
         val w = options.outWidth
         var sampleSize = 1
@@ -65,6 +70,8 @@ object ImageUtils {
             val halfH = h / 2
             val halfW = w / 2
 
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
             while ((halfH / sampleSize) >= reqH && (halfW / sampleSize) >= reqW) {
                 sampleSize *= 2
             }

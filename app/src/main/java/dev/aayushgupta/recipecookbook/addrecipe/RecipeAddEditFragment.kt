@@ -180,7 +180,8 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private fun handleCameraResponse(data: Intent?) {
-
+        // TODO: make recipe image store uri for both actual image and thumbnail
+        // TODO: make recipe image store both internal file uri, content uri
     }
 
     private fun handleGalleryResponse(data: Intent?) {
