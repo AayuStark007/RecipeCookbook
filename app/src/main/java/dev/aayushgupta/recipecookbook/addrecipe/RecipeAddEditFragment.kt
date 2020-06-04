@@ -163,14 +163,29 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private fun dispatchGalleryIntent() {
-        
+        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).also { galleryIntent ->
+            galleryIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            startActivityForResult(galleryIntent, REQUEST_GALLERY_PHOTO)
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                REQUEST_TAKE_PHOTO -> handleCameraResponse(data)
+                REQUEST_GALLERY_PHOTO -> handleGalleryResponse(data)
+            }
         }
+    }
+
+    private fun handleCameraResponse(data: Intent?) {
+
+    }
+
+    private fun handleGalleryResponse(data: Intent?) {
+        
     }
 }
 
 const val REQUEST_TAKE_PHOTO = 101
+const val REQUEST_GALLERY_PHOTO = 102
