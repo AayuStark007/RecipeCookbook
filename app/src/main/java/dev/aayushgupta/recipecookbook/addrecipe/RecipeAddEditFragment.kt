@@ -1,7 +1,11 @@
 package dev.aayushgupta.recipecookbook.addrecipe
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
 import androidx.annotation.RequiresApi
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,8 +29,11 @@ import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeAddEditBinding
 import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.EventObserver
+import dev.aayushgupta.recipecookbook.utils.createImageFile
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 import timber.log.Timber
+import java.io.File
+import java.io.IOException
 
 class RecipeAddEditFragment : Fragment() {
 
@@ -127,4 +135,42 @@ class RecipeAddEditFragment : Fragment() {
             Timber.w("ViewModel not initialized when attempting to set up adapter.")
         }
     }
+
+    private lateinit var currentImageFile: File
+
+    private fun dispatchTakePictureIntent() {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            takePictureIntent.resolveActivity(requireActivity().packageManager)?.also {
+                val photoFile: File? = try {
+                    createImageFile(requireContext())
+                } catch (ex: IOException) {
+                    Timber.e(ex)
+                    null
+                }
+
+                photoFile?.also {
+                    currentImageFile = it
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        requireContext(),
+                        "dev.aayushgupta.recipecookbook.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
+                }
+            }
+        }
+    }
+
+    private fun dispatchGalleryIntent() {
+        
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+
+        }
+    }
 }
+
+const val REQUEST_TAKE_PHOTO = 101
