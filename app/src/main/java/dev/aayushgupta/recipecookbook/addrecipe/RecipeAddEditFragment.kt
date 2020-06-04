@@ -92,10 +92,10 @@ class RecipeAddEditFragment : Fragment() {
                 menuInflater.inflate(R.menu.image_selection_menu, menu)
 
                 setOnMenuItemClickListener {
-                    Timber.d("Image selection item ${it.itemId}")
                     when (it.itemId) {
-                        R.id.menu_open_camera -> {}
-                        R.id.menu_open_gallery -> {}
+                        // TODO: Check if permissions granted
+                        R.id.menu_open_camera -> dispatchTakePictureIntent()
+                        R.id.menu_open_gallery -> dispatchGalleryIntent()
                         R.id.menu_add_random -> { viewModel.appendRandomImage() }
                     }
                     true
@@ -155,6 +155,7 @@ class RecipeAddEditFragment : Fragment() {
                         "dev.aayushgupta.recipecookbook.fileprovider",
                         it
                     )
+                    Timber.d("Photo URI: $photoURI")
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                     startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO)
                 }
@@ -183,7 +184,7 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private fun handleGalleryResponse(data: Intent?) {
-        
+
     }
 }
 
