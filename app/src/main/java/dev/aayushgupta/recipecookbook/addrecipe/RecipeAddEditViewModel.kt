@@ -11,15 +11,16 @@ import dev.aayushgupta.recipecookbook.utils.getRandomRecipeImage
 import kotlinx.coroutines.*
 import timber.log.Timber
 import java.io.File
-import java.io.IOException
 
-class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
+class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository) : ViewModel() {
 
     private val viewModelJob = SupervisorJob()
     private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
     private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
         Timber.e("Exception in coroutine: $exception")
-        ioScope.launch(Dispatchers.Main) { _snackbarText.value = Event(R.string.error_adding_image) }
+        ioScope.launch(Dispatchers.Main) {
+            _snackbarText.value = Event(R.string.error_adding_image)
+        }
     }
 
     private val _dataLoading = MutableLiveData<Boolean>()
@@ -123,7 +124,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
         val ingredientList = ingredients.value
         val stepsList = steps.value
 
-        val currentImages: List<RecipeImage> = images.value ?: listOf( getRandomRecipeImage())
+        val currentImages: List<RecipeImage> = images.value ?: listOf(getRandomRecipeImage())
 
         if (currentTitle == null) {
             _snackbarText.value = Event(R.string.empty_title_message)
@@ -167,17 +168,21 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
 
         val currentRecipeId = recipeId
         if (isNewRecipe || currentRecipeId == null) {
-            val newRecipe = Recipe(title = currentTitle, description = currentDescription,
-            type = recipeType, cuisine = currentCuisine, flavor = flavorType,
-            cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
-            steps = listStep, images = currentImages)
+            val newRecipe = Recipe(
+                title = currentTitle, description = currentDescription,
+                type = recipeType, cuisine = currentCuisine, flavor = flavorType,
+                cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
+                steps = listStep, images = currentImages
+            )
 
             createRecipe(newRecipe)
         } else {
-            val updatedRecipe = Recipe(id = currentRecipeId, title = currentTitle, description = currentDescription,
+            val updatedRecipe = Recipe(
+                id = currentRecipeId, title = currentTitle, description = currentDescription,
                 type = recipeType, cuisine = currentCuisine, flavor = flavorType,
                 cookingTime = RecipeTime(floatTime, timeUnit), ingredients = listIngredient,
-                steps = listStep, images = currentImages)
+                steps = listStep, images = currentImages
+            )
             updateRecipe(updatedRecipe)
         }
 
@@ -261,9 +266,9 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
 }
 
 @Suppress("UNCHECKED_CAST")
-class RecipeAddEditViewModelFactory (
+class RecipeAddEditViewModelFactory(
     private val recipeRepository: IRecipeRepository
-): ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         (RecipeAddEditViewModel(recipeRepository) as T)
 }

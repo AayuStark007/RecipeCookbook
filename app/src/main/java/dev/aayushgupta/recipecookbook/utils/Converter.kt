@@ -13,7 +13,11 @@ import timber.log.Timber
 object Converter {
     @InverseMethod("flavor_str_to_enum")
     @JvmStatic
-    fun flavor_enum_to_str(view: AppCompatAutoCompleteTextView, oldVal: String?, value: FlavorType?): String {
+    fun flavor_enum_to_str(
+        view: AppCompatAutoCompleteTextView,
+        oldVal: String?,
+        value: FlavorType?
+    ): String {
         return when (value) {
             FlavorType.SWEET -> "Sweet"//view.context.getString(R.string.label_flavor_sweet)
             FlavorType.SAVORY -> "Savory"//view.context.getString(R.string.label_flavor_savory)
@@ -26,7 +30,11 @@ object Converter {
     }
 
     @JvmStatic
-    fun flavor_str_to_enum(view: AppCompatAutoCompleteTextView, oldVal: String?, value: String?): FlavorType {
+    fun flavor_str_to_enum(
+        view: AppCompatAutoCompleteTextView,
+        oldVal: String?,
+        value: String?
+    ): FlavorType {
         return when (value) {
             "Sweet" -> FlavorType.SWEET
             "Savory" -> FlavorType.SAVORY
@@ -152,7 +160,10 @@ fun AppCompatAutoCompleteTextView.assignUnit(value: TimeUnit?) {
         if (text.toString() != context.getString(value.displayId)) {
             when (value) {
                 TimeUnit.HOURS -> setText(context.getText(R.string.label_time_unit_hours), false)
-                TimeUnit.MINUTES -> setText(context.getText(R.string.label_time_unit_minutes), false)
+                TimeUnit.MINUTES -> setText(
+                    context.getText(R.string.label_time_unit_minutes),
+                    false
+                )
                 TimeUnit.NONE -> setText(context.getText(R.string.label_none), false)
             }
         }

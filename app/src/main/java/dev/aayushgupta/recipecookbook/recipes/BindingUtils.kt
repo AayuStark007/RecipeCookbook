@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.domain.*
 
@@ -48,7 +47,7 @@ fun TextView.setRecipeTitleText(recipe: Recipe?) {
 @BindingAdapter("recipeCuisineText")
 fun TextView.setRecipeCuisineText(recipe: Recipe?) {
     recipe?.let {
-        if (recipe.cuisine.isBlank() || recipe.cuisine.isEmpty()){
+        if (recipe.cuisine.isBlank() || recipe.cuisine.isEmpty()) {
             visibility = View.GONE
         } else {
             text = recipe.cuisine

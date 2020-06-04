@@ -6,6 +6,7 @@ import android.graphics.Matrix
 import androidx.exifinterface.media.ExifInterface
 import timber.log.Timber
 import java.io.File
+import java.io.FileDescriptor
 import java.io.FileOutputStream
 import java.io.IOException
 
@@ -34,6 +35,29 @@ object ImageUtils {
     }
 
     @Throws(IOException::class)
+    fun copyFileToDest(
+        imageFd: FileDescriptor, destPath: String
+    ): File {
+        File(destPath).parentFile?.also { file ->
+            if (!file.exists()) file.mkdirs()
+            FileOutputStream(destPath).also { foutStream ->
+                try {
+                    // write the compressed bitmap to the dest specified by destPath
+                    val bm = BitmapFactory.decodeFileDescriptor(imageFd)
+                    Timber.d("ALLOC: ${bm.allocationByteCount}")
+                    bm.compress(Bitmap.CompressFormat.JPEG, 80, foutStream)
+                } catch (ex: Exception) {
+                    Timber.e("Exception occured while copyFileToDest: $ex")
+                } finally {
+                    foutStream.flush()
+                    foutStream.close()
+                }
+            }
+        }
+        return File(destPath)
+    }
+
+    @Throws(IOException::class)
     fun decodeSampledBitmapFromFile(imageFile: File, reqW: Int, reqH: Int): Bitmap {
         BitmapFactory.Options().also { options ->
             // First decode with inJustDecodeBounds=true to check dimensions
@@ -49,14 +73,22 @@ object ImageUtils {
             val exif = ExifInterface(imageFile.absolutePath)
             val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 0)
             val matrix = Matrix().also {
-                when(orientation) {
+                when (orientation) {
                     ExifInterface.ORIENTATION_ROTATE_90 -> it.postRotate(90F)
                     ExifInterface.ORIENTATION_ROTATE_180 -> it.postRotate(180F)
                     ExifInterface.ORIENTATION_ROTATE_270 -> it.postRotate(270F)
                     else -> Timber.d("Unknown orientation: $orientation")
                 }
             }
-            return Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.width, scaledBitmap.height, matrix, true)
+            return Bitmap.createBitmap(
+                scaledBitmap,
+                0,
+                0,
+                scaledBitmap.width,
+                scaledBitmap.height,
+                matrix,
+                true
+            )
         }
     }
 

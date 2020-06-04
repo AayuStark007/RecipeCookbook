@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.databinding.ListItemRecipeBinding
 
-class RecipeAdapter(private val viewModel: RecipeViewModel):
+class RecipeAdapter(private val viewModel: RecipeViewModel) :
     ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {
@@ -23,7 +23,8 @@ class RecipeAdapter(private val viewModel: RecipeViewModel):
         submitList(list)
     }
 
-    class RecipeViewHolder private constructor(private val binding: ListItemRecipeBinding): RecyclerView.ViewHolder(binding.root) {
+    class RecipeViewHolder private constructor(private val binding: ListItemRecipeBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         companion object {
             fun from(parent: ViewGroup): RecipeViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
@@ -40,7 +41,7 @@ class RecipeAdapter(private val viewModel: RecipeViewModel):
     }
 }
 
-class RecipeDiffCallback: DiffUtil.ItemCallback<Recipe>() {
+class RecipeDiffCallback : DiffUtil.ItemCallback<Recipe>() {
     override fun areItemsTheSame(oldItem: Recipe, newItem: Recipe): Boolean {
         return oldItem.id == newItem.id
     }

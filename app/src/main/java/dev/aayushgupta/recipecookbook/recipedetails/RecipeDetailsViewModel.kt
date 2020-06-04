@@ -9,7 +9,7 @@ import dev.aayushgupta.recipecookbook.utils.Event
 import dev.aayushgupta.recipecookbook.utils.Result
 import kotlinx.coroutines.launch
 
-class RecipeDetailsViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
+class RecipeDetailsViewModel(private val recipeRepository: IRecipeRepository) : ViewModel() {
     private val _recipeId = MutableLiveData<String>()
 
     private val _recipe = _recipeId.switchMap { recipeId ->
@@ -71,9 +71,9 @@ class RecipeDetailsViewModel(private val recipeRepository: IRecipeRepository): V
 }
 
 @Suppress("UNCHECKED_CAST")
-class RecipeDetailsViewModelFactory (
+class RecipeDetailsViewModelFactory(
     private val recipeRepository: IRecipeRepository
-): ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         (RecipeDetailsViewModel(recipeRepository) as T)
 }

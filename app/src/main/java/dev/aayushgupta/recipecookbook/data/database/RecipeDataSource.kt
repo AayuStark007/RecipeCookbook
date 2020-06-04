@@ -4,12 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.map
 import dev.aayushgupta.recipecookbook.data.IRecipeDataSource
-import dev.aayushgupta.recipecookbook.utils.Result
-import dev.aayushgupta.recipecookbook.utils.Result.Success
-import dev.aayushgupta.recipecookbook.utils.Result.Loading
-import dev.aayushgupta.recipecookbook.utils.Result.Error
 import dev.aayushgupta.recipecookbook.data.domain.Recipe
 import dev.aayushgupta.recipecookbook.data.domain.asDatabaseModel
+import dev.aayushgupta.recipecookbook.utils.Result
+import dev.aayushgupta.recipecookbook.utils.Result.*
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -28,7 +26,7 @@ class RecipeDataSource internal constructor(
     }
 
     override fun observeRecipe(recipeId: String): LiveData<Result<Recipe>> {
-        return Transformations.map(recipeDao.observeRecipeById(recipeId)){
+        return Transformations.map(recipeDao.observeRecipeById(recipeId)) {
             it?.asDomainModel() ?: Recipe(id = "NULL")
         }.map {
             if (it.id == "NULL") {

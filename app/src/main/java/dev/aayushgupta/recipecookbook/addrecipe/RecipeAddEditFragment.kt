@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import android.provider.MediaStore
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -12,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.PopupMenu
-import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -29,9 +29,6 @@ import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeAddEditBinding
 import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -49,8 +46,10 @@ class RecipeAddEditFragment : Fragment() {
     private lateinit var recipeImageAdapter: RecipeImageAdapter
 
     private val compressor by lazy {
-        FileCompressor(maxWidth = 256, maxHeight = 256,
-            destPath = requireContext().cacheDir.path + File.separator + "images")
+        FileCompressor(
+            maxWidth = 256, maxHeight = 256,
+            destPath = requireContext().cacheDir.path + File.separator + "images"
+        )
     }
 
     override fun onCreateView(
@@ -61,7 +60,8 @@ class RecipeAddEditFragment : Fragment() {
         val root = inflater.inflate(R.layout.fragment_recipe_add_edit, container, false)
         fragmentRecipeAddEditBinding = FragmentRecipeAddEditBinding.bind(root).apply {
             viewmodel = viewModel
-            addrecipeImageRvContainer.layoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+            addrecipeImageRvContainer.layoutManager =
+                LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
         }
 
         fragmentRecipeAddEditBinding.lifecycleOwner = this.viewLifecycleOwner
@@ -94,7 +94,11 @@ class RecipeAddEditFragment : Fragment() {
 
     private fun setupImageSelectionMenu() {
         viewModel.addImageEvent.observe(viewLifecycleOwner, EventObserver {
-            PopupMenu(requireContext(), fragmentRecipeAddEditBinding.addrecipeBtnAddImage, Gravity.START).run {
+            PopupMenu(
+                requireContext(),
+                fragmentRecipeAddEditBinding.addrecipeBtnAddImage,
+                Gravity.START
+            ).run {
                 menuInflater.inflate(R.menu.image_selection_menu, menu)
 
                 setOnMenuItemClickListener {
@@ -102,7 +106,9 @@ class RecipeAddEditFragment : Fragment() {
                         // TODO: Check if permissions granted
                         R.id.menu_open_camera -> dispatchTakePictureIntent()
                         R.id.menu_open_gallery -> dispatchGalleryIntent()
-                        R.id.menu_add_random -> { viewModel.appendRandomImage() }
+                        R.id.menu_add_random -> {
+                            viewModel.appendRandomImage()
+                        }
                     }
                     true
                 }
@@ -170,7 +176,10 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private fun dispatchGalleryIntent() {
-        Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).also { galleryIntent ->
+        Intent(
+            Intent.ACTION_PICK,
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+        ).also { galleryIntent ->
             galleryIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             startActivityForResult(galleryIntent, REQUEST_GALLERY_PHOTO)
         }
@@ -180,19 +189,51 @@ class RecipeAddEditFragment : Fragment() {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 REQUEST_TAKE_PHOTO -> viewModel.handleCameraResponse(currentImageFile, compressor)
-                REQUEST_GALLERY_PHOTO -> {
-                    Timber.d("XYPOS: Got file: ${data?.data}")
-                    val realPath = data?.data?.getRealPathFromUri(requireContext()) // TODO: Profile this
-                    viewModel.handleGalleryResponse(realPath, compressor)
-                }
+                REQUEST_GALLERY_PHOTO -> handleGalleryResponse(data)
             }
         }
     }
 
-
-
     private fun handleGalleryResponse(data: Intent?) {
+        data?.let {
+            Timber.d("XYPOS: Got file: ${it.data}")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                handleGalleryResponseSinceQ(it.data)
+            } else {
+                handleGalleryResponsePreQ(it.data)
+            }
+        }
+    }
 
+    private fun handleGalleryResponsePreQ(uri: Uri?) {
+        val realPath = uri?.getRealPathFromUri(requireContext()) // TODO: Profile this
+        viewModel.handleGalleryResponse(realPath, compressor)
+    }
+
+    private fun handleGalleryResponseSinceQ(uri: Uri?) {
+        val fileLocalPath: String
+        fileLocalPath = uri?.let {
+            val parcelFd: ParcelFileDescriptor? =
+                requireContext().contentResolver.openFileDescriptor(uri, "r")
+            try {
+                val photoFile: File = try {
+                    createImageFile(requireContext())
+                } catch (ex: IOException) {
+                    Timber.e(ex)
+                    return@let ""
+                }
+                parcelFd?.let { pfd ->
+                    val destDir = requireContext().cacheDir.path + File.separator + "images"
+                    ImageUtils.copyFileToDest(
+                        pfd.fileDescriptor,
+                        destDir + File.separator + photoFile.name
+                    ).absolutePath
+                } ?: ""
+            } finally {
+
+            }
+        } ?: ""
+        viewModel.handleCameraResponse(File(fileLocalPath), compressor)
     }
 }
 

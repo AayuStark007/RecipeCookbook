@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatAutoCompleteTextView
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.fragment.app.Fragment
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -23,7 +22,7 @@ data class IngredientContainersTest(
     var nameField: TextInputLayout
 )
 
-class TestFragment: Fragment() {
+class TestFragment : Fragment() {
 
     private lateinit var fragmentTestBinding: FragmentTestBinding
 
@@ -54,13 +53,14 @@ class TestFragment: Fragment() {
     ) {
         Timber.d("New recipe")
 
-        val baseNameUnit: TextInputLayout = inflater.inflate(R.layout.list_item_test, container, false) as TextInputLayout
+        val baseNameUnit: TextInputLayout =
+            inflater.inflate(R.layout.list_item_test, container, false) as TextInputLayout
 
 
         val currentIngredientSet = IngredientContainersTest(
 //            fragmentTestBinding.addrecipeIngredientQtyTextinputLayout,
 //            fragmentTestBinding.addrecipeIngredientMeasureTextinputLayout,
-              baseNameUnit
+            baseNameUnit
         )
         ingredientList = ArrayList<IngredientContainersTest>(listOf(currentIngredientSet))
         baseNameUnit.setEndIconOnClickListener {

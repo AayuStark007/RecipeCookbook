@@ -19,8 +19,10 @@ class FileCompressor @JvmOverloads constructor(
 
     @Throws(IOException::class)
     private fun compressToFile(imageFile: File, compressedFileName: String): File {
-        return ImageUtils.compressImage(imageFile, maxWidth, maxHeight, compressFormat, quality,
-            "${destPath}${File.separator}${compressedFileName}")
+        return ImageUtils.compressImage(
+            imageFile, maxWidth, maxHeight, compressFormat, quality,
+            "${destPath}${File.separator}${compressedFileName}"
+        )
     }
 
     // TODO compressToFile(...): Flow<File>

@@ -10,7 +10,7 @@ import dev.aayushgupta.recipecookbook.utils.Event
 import dev.aayushgupta.recipecookbook.utils.Result
 import kotlinx.coroutines.launch
 
-class RecipeViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
+class RecipeViewModel(private val recipeRepository: IRecipeRepository) : ViewModel() {
 
     private val _forceUpdate = MutableLiveData<Boolean>(false)
 
@@ -90,7 +90,7 @@ class RecipeViewModel(private val recipeRepository: IRecipeRepository): ViewMode
     }
 
 
-     // Called by Data Binding.
+    // Called by Data Binding.
     fun openRecipe(recipeId: String) {
         _openRecipeEvent.value = Event(recipeId)
     }
@@ -128,9 +128,9 @@ class RecipeViewModel(private val recipeRepository: IRecipeRepository): ViewMode
 }
 
 @Suppress("UNCHECKED_CAST")
-class RecipeViewModelFactory (
+class RecipeViewModelFactory(
     private val recipeRepository: IRecipeRepository
-): ViewModelProvider.NewInstanceFactory() {
+) : ViewModelProvider.NewInstanceFactory() {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
         (RecipeViewModel(recipeRepository) as T)
 }

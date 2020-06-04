@@ -16,7 +16,7 @@ import dev.aayushgupta.recipecookbook.utils.ItemSpacingDecoration
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
 import timber.log.Timber
 
-class RecipeFragment: Fragment() {
+class RecipeFragment : Fragment() {
 
     private val viewModel by viewModels<RecipeViewModel> {
         RecipeViewModelFactory(DefaultRecipeRepository.getRepository(requireActivity().application))

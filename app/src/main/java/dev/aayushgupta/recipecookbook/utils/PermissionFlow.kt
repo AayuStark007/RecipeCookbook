@@ -5,7 +5,13 @@ import android.app.Application
 import android.content.Context
 
 object PermissionFlow {
-    fun triggerPermissionFlow(app: Application, ctx: Context, activity: Activity, onSuccess: () -> Unit, onFail: () -> Unit) {
+    fun triggerPermissionFlow(
+        app: Application,
+        ctx: Context,
+        activity: Activity,
+        onSuccess: () -> Unit,
+        onFail: () -> Unit
+    ) {
 
     }
 }
