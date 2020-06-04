@@ -5,13 +5,22 @@ import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.IRecipeRepository
 import dev.aayushgupta.recipecookbook.data.domain.*
 import dev.aayushgupta.recipecookbook.utils.Event
+import dev.aayushgupta.recipecookbook.utils.FileCompressor
 import dev.aayushgupta.recipecookbook.utils.Result
 import dev.aayushgupta.recipecookbook.utils.getRandomRecipeImage
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
-import java.util.*
+import java.io.File
+import java.io.IOException
 
 class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): ViewModel() {
+
+    private val viewModelJob = SupervisorJob()
+    private val ioScope = CoroutineScope(Dispatchers.IO + viewModelJob)
+    private val exceptionHandler = CoroutineExceptionHandler { _, exception ->
+        Timber.e("Exception in coroutine: $exception")
+        ioScope.launch(Dispatchers.Main) { _snackbarText.value = Event(R.string.error_adding_image) }
+    }
 
     private val _dataLoading = MutableLiveData<Boolean>()
     val dataLoading: LiveData<Boolean> = _dataLoading
@@ -199,6 +208,7 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
     }
 
     fun onPreviewDelete(image: RecipeImage?) {
+        // images are already in cache, no need to delete
         image?.let {
             val currentImages = images.value ?: return
             images.value = currentImages.filter { it.uri != image.uri }
@@ -210,6 +220,43 @@ class RecipeAddEditViewModel(private val recipeRepository: IRecipeRepository): V
             .also { it.add(getRandomRecipeImage()) }
         images.value = listImages
     }
+
+    private fun appendImage(file: File) {
+        val listImages = (images.value?.toMutableList() ?: mutableListOf())
+            .also { it.add(RecipeImage(uri = file.absolutePath, isLocal = true)) }
+        images.value = listImages
+    }
+
+    fun handleCameraResponse(currentImageFile: File, compressor: FileCompressor) {
+        // TODO: make recipe image store uri for both actual image and thumbnail
+        // TODO: make recipe image store both internal file uri, content uri
+        // TODO: since image is stored in cache, need ref to actual uri in case cache is cleared and we need to compress image again
+        compressAndAddImage(currentImageFile, compressor)
+    }
+
+    fun handleGalleryResponse(path: String?, compressor: FileCompressor) {
+        if (path.isNullOrBlank()) {
+            _snackbarText.value = Event(R.string.error_invalid_path)
+            return
+        }
+        compressAndAddImage(File(path), compressor)
+    }
+
+    private fun compressAndAddImage(file: File, compressor: FileCompressor) {
+        // let me remind you that this is a blocking IO op, hence Dispatchers.IO
+        ioScope.launch(exceptionHandler) {
+            val resultFile = compressor.compressToFile(file)
+            withContext(Dispatchers.Main) {
+                appendImage(resultFile)
+            }
+        }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
+    }
+
 
 }
 

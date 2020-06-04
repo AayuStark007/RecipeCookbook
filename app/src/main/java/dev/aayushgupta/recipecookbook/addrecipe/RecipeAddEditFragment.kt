@@ -28,9 +28,10 @@ import dev.aayushgupta.recipecookbook.data.domain.TimeUnit
 import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeAddEditBinding
 import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
-import dev.aayushgupta.recipecookbook.utils.EventObserver
-import dev.aayushgupta.recipecookbook.utils.createImageFile
-import dev.aayushgupta.recipecookbook.utils.setupSnackbar
+import dev.aayushgupta.recipecookbook.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -46,6 +47,11 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private lateinit var recipeImageAdapter: RecipeImageAdapter
+
+    private val compressor by lazy {
+        FileCompressor(maxWidth = 256, maxHeight = 256,
+            destPath = requireContext().cacheDir.path + File.separator + "images")
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -173,16 +179,17 @@ class RecipeAddEditFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
-                REQUEST_TAKE_PHOTO -> handleCameraResponse(data)
-                REQUEST_GALLERY_PHOTO -> handleGalleryResponse(data)
+                REQUEST_TAKE_PHOTO -> viewModel.handleCameraResponse(currentImageFile, compressor)
+                REQUEST_GALLERY_PHOTO -> {
+                    Timber.d("XYPOS: Got file: ${data?.data}")
+                    val realPath = data?.data?.getRealPathFromUri(requireContext()) // TODO: Profile this
+                    viewModel.handleGalleryResponse(realPath, compressor)
+                }
             }
         }
     }
 
-    private fun handleCameraResponse(data: Intent?) {
-        // TODO: make recipe image store uri for both actual image and thumbnail
-        // TODO: make recipe image store both internal file uri, content uri
-    }
+
 
     private fun handleGalleryResponse(data: Intent?) {
 

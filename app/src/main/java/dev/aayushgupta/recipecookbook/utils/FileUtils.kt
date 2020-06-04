@@ -2,11 +2,16 @@ package dev.aayushgupta.recipecookbook.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.database.Cursor
+import android.net.Uri
 import android.os.Environment
+import android.os.ParcelFileDescriptor
+import android.provider.MediaStore
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 @SuppressLint("SimpleDateFormat")
 @Throws(IOException::class)
@@ -19,4 +24,19 @@ fun createImageFile(context: Context): File {
         ".jpg",
         storageDir
     )
+}
+
+fun Uri.getRealPathFromUri(context: Context): String {
+    var cursor: Cursor? = null
+    try {
+        val proj: Array<String> = arrayOf(MediaStore.Images.Media.DATA)
+        cursor = context.contentResolver.query(this, proj, null, null, null)?.also {
+            val columnIndex = it.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+            it.moveToFirst()
+            return it.getString(columnIndex)
+        }
+    } finally {
+        cursor?.close()
+    }
+    return ""
 }
