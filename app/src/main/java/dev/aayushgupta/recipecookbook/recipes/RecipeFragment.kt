@@ -37,7 +37,7 @@ class RecipeFragment : Fragment() {
             viewmodel = viewModel
             recipeList.layoutManager = GridLayoutManager(activity, 2)
             recipeList.addItemDecoration(
-                ItemSpacingDecoration(space = 8, span = 2)
+                ItemSpacingDecoration(spaceSize = 16, spanCount = 2)
             )
         }
         // TODO: so something about the bizzare icon color
@@ -47,10 +47,10 @@ class RecipeFragment : Fragment() {
 
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
-            R.id.menu_filter -> {
-                showFilterPopUpMenu()
-                true
-            }
+//            R.id.menu_filter -> {
+//                showFilterPopUpMenu()
+//                true
+//            }
             R.id.menu_refresh -> {
                 viewModel.loadRecipes(true)
                 true

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="recipe"
             type="dev.aayushgupta.recipecookbook.data.domain.Recipe" />
@@ -14,55 +15,56 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        android:id="@+id/item_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> viewmodel.openRecipe(recipe.id)}">
+        android:onClick="@{() -> viewmodel.openRecipe(recipe.id)}"
+        app:cardCornerRadius="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/item_constraint_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/recipe_image"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:recipeImage="@{recipe}"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintBottom_toTopOf="@+id/recipe_title"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintDimensionRatio="w,1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_chainStyle="packed"
+                app:recipeImage="@{recipe}"
                 tools:src="@color/colorPrimaryDark" />
 
             <TextView
                 android:id="@+id/recipe_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
-                android:textAlignment="viewStart"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
-                android:textSize="18sp"
-                app:recipeTitleText="@{recipe}"
-                app:layout_constraintBottom_toTopOf="@+id/recipe_cuisine"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_image"
-                tools:text="Paneer Pulao"/>
+                app:recipeTitleText="@{recipe}"
+                tools:text="Paneer Pulao" />
 
             <TextView
                 android:id="@+id/recipe_cuisine"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="8dp"
-                android:textAlignment="textStart"
-                app:recipeCuisineText="@{recipe}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/recipe_title"
+                app:recipeCuisineText="@{recipe}"
                 tools:text="Indian" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
