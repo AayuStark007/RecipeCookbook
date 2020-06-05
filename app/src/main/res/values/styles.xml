@@ -14,12 +14,27 @@
         <item name="fontFamily">@font/opensans_font</item>
         <!-- sets the style for the overflow button -->
         <item name="actionOverflowButtonStyle">@style/actionOverflowButtonStyle</item>
+
+        <item name="android:navigationBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <!-- This style defines the tint color of the overflow menu button -->
     <style name="actionOverflowButtonStyle" parent="@style/Widget.AppCompat.ActionButton.Overflow">
-        <item name="android:tint">@color/colorAccent</item>
+<!--        <item name="android:tint">@color/colorAccent</item>-->
     </style>
 
-    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Toolbar" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="Widget.App.FloatingActionButton" parent="Widget.MaterialComponents.FloatingActionButton">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.FloatingActionButton</item>
+    </style>
+
+    <style name="ThemeOverlay.App.FloatingActionButton" parent="">
+        <item name="colorSecondary">@color/colorAccent</item>
+<!--        <item name="colorOnSecondary">@color/shrine_pink_900</item>-->
+<!--        <item name="colorOnSurface">@color/shrine_pink_900</item>-->
+    </style>
+
 </resources>
