@@ -29,6 +29,10 @@ import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentRecipeAddEditBinding
 import dev.aayushgupta.recipecookbook.recipes.ADD_EDIT_RESULT_OK
 import dev.aayushgupta.recipecookbook.utils.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import java.io.File
 import java.io.IOException
@@ -44,6 +48,9 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private lateinit var recipeImageAdapter: RecipeImageAdapter
+
+    private val job = Job()
+    private val ioScope = CoroutineScope(Dispatchers.IO + job)
 
     private val compressor by lazy {
         FileCompressor(
@@ -211,29 +218,29 @@ class RecipeAddEditFragment : Fragment() {
     }
 
     private fun handleGalleryResponseSinceQ(uri: Uri?) {
-        val fileLocalPath: String
-        fileLocalPath = uri?.let {
-            val parcelFd: ParcelFileDescriptor? =
-                requireContext().contentResolver.openFileDescriptor(uri, "r")
-            try {
-                val photoFile: File = try {
-                    createImageFile(requireContext())
-                } catch (ex: IOException) {
-                    Timber.e(ex)
-                    return@let ""
+        ioScope.launch {
+            val fileLocalPath: String
+            fileLocalPath = uri?.let {
+                val parcelFd: ParcelFileDescriptor? =
+                    requireContext().contentResolver.openFileDescriptor(uri, "r")
+                parcelFd.use {
+                    val photoFile: File = try {
+                        createImageFile(requireContext())
+                    } catch (ex: IOException) {
+                        Timber.e(ex)
+                        return@let ""
+                    }
+                    parcelFd?.let { pfd ->
+                        val destDir = requireContext().cacheDir.path + File.separator + "images_un"
+                        ImageUtils.copyFileToDest(
+                            pfd.fileDescriptor,
+                            destDir + File.separator + photoFile.name
+                        ).absolutePath
+                    } ?: ""
                 }
-                parcelFd?.let { pfd ->
-                    val destDir = requireContext().cacheDir.path + File.separator + "images_un"
-                    ImageUtils.copyFileToDest(
-                        pfd.fileDescriptor,
-                        destDir + File.separator + photoFile.name
-                    ).absolutePath
-                } ?: ""
-            } finally {
-
-            }
-        } ?: ""
-        viewModel.handleCameraResponse(File(fileLocalPath), compressor)
+            } ?: ""
+            viewModel.handleCameraResponse(File(fileLocalPath), compressor)
+        }
     }
 }
 
