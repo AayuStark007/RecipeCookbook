@@ -223,7 +223,7 @@ class RecipeAddEditFragment : Fragment() {
                     return@let ""
                 }
                 parcelFd?.let { pfd ->
-                    val destDir = requireContext().cacheDir.path + File.separator + "images"
+                    val destDir = requireContext().cacheDir.path + File.separator + "images_un"
                     ImageUtils.copyFileToDest(
                         pfd.fileDescriptor,
                         destDir + File.separator + photoFile.name
