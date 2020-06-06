@@ -7,6 +7,7 @@
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!-- For Android sdk versions 26+. -->
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/opensans_font</item>
