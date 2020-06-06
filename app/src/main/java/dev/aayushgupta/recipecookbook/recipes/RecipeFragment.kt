@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import dev.aayushgupta.recipecookbook.R
 import dev.aayushgupta.recipecookbook.data.repository.DefaultRecipeRepository
 import dev.aayushgupta.recipecookbook.databinding.FragmentRecipesBinding
+import dev.aayushgupta.recipecookbook.utils.AutoSpanGridLayoutManager
 import dev.aayushgupta.recipecookbook.utils.EventObserver
 import dev.aayushgupta.recipecookbook.utils.ItemSpacingDecoration
 import dev.aayushgupta.recipecookbook.utils.setupSnackbar
@@ -35,7 +36,7 @@ class RecipeFragment : Fragment() {
     ): View? {
         fragmentRecipesBinding = FragmentRecipesBinding.inflate(inflater, container, false).apply {
             viewmodel = viewModel
-            recipeList.layoutManager = GridLayoutManager(activity, 2)
+            recipeList.layoutManager = AutoSpanGridLayoutManager(requireContext(), 500)
             recipeList.addItemDecoration(
                 ItemSpacingDecoration(spaceSize = 16, spanCount = 2)
             )
