@@ -10,7 +10,7 @@
         <item name="colorAccent">@color/colorSecondary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
 
-        <item name="android:colorBackground">#B9E1BB</item>
+        <item name="android:colorBackground">@color/colorPrimaryLight</item>
         <!-- For Android sdk versions 26+. -->
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/opensans_font</item>
         <!-- Target Android sdk versions < 26 and > 14. -->
