@@ -81,9 +81,9 @@ fun TextView.setRecipeTimeText(recipe: Recipe?) {
             }
             TimeUnit.MINUTES -> {
                 text = if (timeVal == 1F) {
-                    "$timeVal Min."
+                    "$timeVal Min"
                 } else {
-                    "$timeVal Mins."
+                    "$timeVal Mins"
                 }
             }
             TimeUnit.NONE -> visibility = View.GONE
@@ -105,17 +105,24 @@ fun TextView.setRecipeDescription(recipe: Recipe?) {
 @BindingAdapter("recipeIngredients")
 fun TextView.setRecipeIngredients(recipe: Recipe?) {
     recipe?.let {
-        text = formatIngredientsList(recipe.ingredients)
+        text = formatIngredientsListV2(recipe.ingredients)//formatIngredientsList(recipe.ingredients)
     }
 }
 
 @BindingAdapter("recipeSteps")
 fun TextView.setRecipeSteps(recipe: Recipe?) {
     recipe?.let {
-        text = formatStepsList(recipe.steps)
+        text = formatStepsListV2(recipe.steps)
     }
 }
 
+fun formatIngredientsListV2(ingredients: List<Ingredient>): String {
+    return ingredients.joinToString("\n- ", prefix = "- ") { it.name }
+}
+
+fun formatStepsListV2(steps: List<String>): String {
+    return steps.joinToString("\n- ", prefix = "- ")
+}
 
 fun formatIngredientsList(ingredients: List<Ingredient>): Spanned {
     val sb = StringBuilder()
