@@ -8,6 +8,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorSecondary</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
         <!-- For Android sdk versions 26+. -->
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/opensans_font</item>
         <!-- Target Android sdk versions < 26 and > 14. -->
