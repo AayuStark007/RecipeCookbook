@@ -7,8 +7,10 @@
     <style name="Base.AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorSecondary</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:colorBackground">@color/colorPrimaryLight</item>
         <!-- For Android sdk versions 26+. -->
         <item name="android:fontFamily" tools:targetApi="jelly_bean">@font/opensans_font</item>
         <!-- Target Android sdk versions < 26 and > 14. -->
@@ -32,14 +34,11 @@
     </style>
 
     <style name="ThemeOverlay.App.FloatingActionButton" parent="">
-        <item name="colorSecondary">@color/colorAccent</item>
-<!--        <item name="colorOnSecondary">@color/shrine_pink_900</item>-->
-<!--        <item name="colorOnSurface">@color/shrine_pink_900</item>-->
+        <item name="colorSecondary">@color/colorSecondary</item>
     </style>
 
     <style name="ThemeOverlay.App" parent="ThemeOverlay.AppCompat.Light">
         <item name="android:colorBackground">@color/colorPrimary</item>
-
     </style>
 
 </resources>

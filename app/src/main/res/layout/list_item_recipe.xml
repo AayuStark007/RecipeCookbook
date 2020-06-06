@@ -16,6 +16,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/item_card_view"
+        android:backgroundTint="@color/colorSecondary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{() -> viewmodel.openRecipe(recipe.id)}"
