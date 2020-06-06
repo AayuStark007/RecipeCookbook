@@ -67,7 +67,7 @@ class RecipeViewModel(private val recipeRepository: IRecipeRepository) : ViewMod
     private fun setScreenState() {
         setState(
             R.string.label_saved_recipes, R.string.no_recipes,
-            R.drawable.ic_filter_list, true
+            R.drawable.ic_healthy_food, true
         )
     }
 
